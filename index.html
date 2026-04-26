@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Data Science Guide </title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Fredoka+One&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f0e17;
+    --surface: #1a1830;
+    --card: #22203a;
+    --border: #2e2b4a;
+    --text: #fffffe;
+    --sub: #a7a9be;
+    --teal:   #00e5a0;
+    --blue:   #4fc3f7;
+    --purple: #b388ff;
+    --coral:  #ff6b6b;
+    --amber:  #ffca28;
+    --pink:   #f48fb1;
+    --green:  #69f0ae;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── Stars background ── */
+  #stars {
+    position: fixed; inset: 0; pointer-events: none; z-index: 0;
+    overflow: hidden;
+  }
+  .star {
+    position: absolute;
+    background: white;
+    border-radius: 50%;
+    animation: twinkle var(--d) ease-in-out infinite alternate;
+    opacity: 0;
+  }
+  @keyframes twinkle { to { opacity: var(--o); } }
+
+  /* ── Hero ── */
+  header {
+    position: relative; z-index: 1;
+    text-align: center;
+    padding: 60px 20px 40px;
+  }
+  .hero-emoji {
+    font-size: 5rem;
+    display: block;
+    animation: float 3s ease-in-out infinite;
+    filter: drop-shadow(0 0 30px rgba(79,195,247,0.5));
+  }
+  @keyframes float {
+    0%,100% { transform: translateY(0); }
+    50%      { transform: translateY(-12px); }
+  }
+  h1 {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: clamp(2.2rem, 6vw, 4rem);
+    background: linear-gradient(135deg, var(--teal), var(--blue), var(--purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.1;
+    margin: 12px 0 8px;
+  }
+  .hero-sub {
+    font-size: 1.1rem;
+    color: var(--sub);
+    font-weight: 600;
+    max-width: 500px;
+    margin: 0 auto 28px;
+  }
+  .score-bar {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: 50px;
+    padding: 8px 20px;
+    font-weight: 800;
+    font-size: 1rem;
+  }
+  .score-bar .stars-count { color: var(--amber); font-size: 1.2rem; }
+
+  /* ── Search ── */
+  .search-wrap {
+    position: relative; z-index: 1;
+    max-width: 520px;
+    margin: 0 auto 20px;
+    padding: 0 16px;
+  }
+  .search-wrap input {
+    width: 100%;
+    background: var(--surface);
+    border: 2px solid var(--border);
+    border-radius: 50px;
+    padding: 14px 24px 14px 52px;
+    color: var(--text);
+    font-family: 'Nunito', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .search-wrap input:focus { border-color: var(--blue); }
+  .search-wrap .si {
+    position: absolute; left: 34px; top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.3rem; pointer-events: none;
+  }
+
+  /* ── Category filters ── */
+  .filters {
+    position: relative; z-index: 1;
+    display: flex; flex-wrap: wrap; gap: 8px;
+    justify-content: center;
+    padding: 0 16px 28px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .filter-btn {
+    border: none; border-radius: 50px;
+    padding: 7px 16px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.18s;
+    opacity: 0.55;
+    background: var(--surface);
+    color: var(--text);
+    border: 1.5px solid var(--border);
+  }
+  .filter-btn:hover { opacity: 0.85; transform: translateY(-1px); }
+  .filter-btn.active { opacity: 1; transform: translateY(-2px); }
+
+  /* ── Grid ── */
+  .grid-wrap {
+    position: relative; z-index: 1;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 16px 60px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 16px;
+  }
+
+  /* ── Skill Card ── */
+  .card {
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    border-radius: 20px;
+    padding: 20px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+    position: relative;
+    overflow: hidden;
+    user-select: none;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: var(--accent);
+    border-radius: 20px 20px 0 0;
+  }
+  .card:hover {
+    transform: translateY(-4px) scale(1.01);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+    border-color: var(--accent);
+  }
+  .card.learned { border-color: var(--amber) !important; }
+  .card.learned::after {
+    content: '⭐';
+    position: absolute;
+    top: 12px; right: 14px;
+    font-size: 1.1rem;
+    animation: pop 0.3s ease;
+  }
+  @keyframes pop { 0%{transform:scale(0)} 70%{transform:scale(1.3)} 100%{transform:scale(1)} }
+
+  .card-icon { font-size: 2.4rem; margin-bottom: 10px; display: block; line-height: 1; }
+  .card-name {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: 1.2rem;
+    color: var(--text);
+    margin-bottom: 3px;
+  }
+  .card-cat {
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--accent);
+    margin-bottom: 10px;
+  }
+  .card-desc {
+    font-size: 0.88rem;
+    color: var(--sub);
+    line-height: 1.55;
+    font-weight: 600;
+  }
+  .card-btn {
+    margin-top: 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--accent);
+    color: #0f0e17;
+    border: none;
+    border-radius: 50px;
+    padding: 6px 14px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: opacity 0.15s, transform 0.15s;
+  }
+  .card-btn:hover { opacity: 0.85; transform: scale(1.05); }
+
+  /* ── Modal ── */
+  .overlay {
+    position: fixed; inset: 0; z-index: 100;
+    background: rgba(10,10,20,0.88);
+    display: flex; align-items: center; justify-content: center;
+    padding: 20px;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.25s;
+    backdrop-filter: blur(6px);
+  }
+  .overlay.open { opacity: 1; pointer-events: all; }
+  .modal {
+    background: var(--card);
+    border: 2px solid var(--modal-accent, var(--blue));
+    border-radius: 28px;
+    max-width: 540px;
+    width: 100%;
+    padding: 36px 32px;
+    position: relative;
+    transform: scale(0.9) translateY(20px);
+    transition: transform 0.28s cubic-bezier(.34,1.56,.64,1);
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+  .overlay.open .modal { transform: scale(1) translateY(0); }
+  .modal-close {
+    position: absolute; top: 16px; right: 18px;
+    background: var(--surface); border: none;
+    color: var(--sub); font-size: 1.4rem;
+    border-radius: 50%; width: 36px; height: 36px;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: background 0.15s;
+  }
+  .modal-close:hover { background: var(--border); }
+  .modal-icon { font-size: 4rem; display: block; text-align: center; margin-bottom: 10px; }
+  .modal-name {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: 2rem; text-align: center;
+    color: var(--text); margin-bottom: 4px;
+  }
+  .modal-cat {
+    text-align: center; font-size: 0.8rem;
+    font-weight: 800; text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--modal-accent);
+    margin-bottom: 20px;
+  }
+  .modal-divider {
+    height: 2px; border-radius: 2px;
+    background: linear-gradient(90deg, transparent, var(--modal-accent), transparent);
+    margin: 0 0 20px;
+  }
+
+  .explain-box {
+    background: var(--surface);
+    border-radius: 16px;
+    padding: 18px 20px;
+    margin-bottom: 16px;
+  }
+  .explain-label {
+    font-size: 0.75rem; font-weight: 800;
+    text-transform: uppercase; letter-spacing: 0.07em;
+    color: var(--modal-accent); margin-bottom: 8px;
+  }
+  .explain-text {
+    font-size: 1rem; line-height: 1.65;
+    color: var(--text); font-weight: 600;
+  }
+  .fun-fact {
+    background: linear-gradient(135deg, rgba(255,202,40,0.1), rgba(255,107,107,0.08));
+    border: 1.5px solid rgba(255,202,40,0.25);
+    border-radius: 14px;
+    padding: 14px 18px;
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+    color: var(--amber);
+    font-weight: 700;
+    line-height: 1.5;
+  }
+  .modal-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+  .modal-learn-btn {
+    flex: 1; min-width: 140px;
+    padding: 12px 20px;
+    border-radius: 50px;
+    border: none;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.18s;
+    background: var(--modal-accent);
+    color: #0f0e17;
+  }
+  .modal-learn-btn:hover { opacity: 0.88; transform: scale(1.03); }
+  .modal-next-btn {
+    flex: 1; min-width: 120px;
+    padding: 12px 20px;
+    border-radius: 50px;
+    border: 2px solid var(--border);
+    background: transparent;
+    color: var(--sub);
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.18s;
+  }
+  .modal-next-btn:hover { border-color: var(--modal-accent); color: var(--text); }
+
+  /* ── Progress bar ── */
+  .progress-wrap {
+    position: relative; z-index: 1;
+    max-width: 700px;
+    margin: 0 auto 24px;
+    padding: 0 16px;
+  }
+  .progress-label {
+    display: flex; justify-content: space-between;
+    font-size: 0.8rem; font-weight: 800;
+    color: var(--sub); margin-bottom: 6px;
+  }
+  .progress-track {
+    height: 10px;
+    background: var(--surface);
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--teal), var(--blue));
+    border-radius: 10px;
+    transition: width 0.4s ease;
+  }
+
+  /* ── Empty ── */
+  .empty {
+    grid-column: 1/-1;
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--sub);
+    font-size: 1.1rem;
+    font-weight: 700;
+  }
+  .empty span { font-size: 3rem; display: block; margin-bottom: 12px; }
+
+  /* ── Confetti ── */
+  .confetti-piece {
+    position: fixed;
+    width: 10px; height: 10px;
+    pointer-events: none;
+    z-index: 999;
+    border-radius: 2px;
+    animation: confetti-fall 1.2s ease forwards;
+  }
+  @keyframes confetti-fall {
+    0%   { transform: translateY(0) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(200px) rotate(720deg); opacity: 0; }
+  }
+
+  /* scrollbar */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 6px; }
+</style>
+</head>
+<body>
+
+<div id="stars"></div>
+
+<header>
+  <span class="hero-emoji">🚀</span>
+  <h1>Data Science Guide</h1>
+  <p class="hero-sub">Learn 49 amazing tech tools, explained just for you!</p>
+  <div class="score-bar">
+    <span>⭐ Stars collected:</span>
+    <span class="stars-count" id="starCount">0</span>
+    <span>/ 49</span>
+  </div>
+</header>
+
+<div class="progress-wrap">
+  <div class="progress-label">
+    <span>🌟 Your learning journey</span>
+    <span id="progressText">0% complete</span>
+  </div>
+  <div class="progress-track">
+    <div class="progress-fill" id="progressFill" style="width:0%"></div>
+  </div>
+</div>
+
+<div class="search-wrap">
+  <span class="si">🔍</span>
+  <input type="text" id="search" placeholder="Search for a skill..." oninput="render()">
+</div>
+
+<div class="filters" id="filters"></div>
+<div class="grid-wrap" id="grid"></div>
+
+<!-- Modal -->
+<div class="overlay" id="overlay" onclick="closeModal(event)">
+  <div class="modal" id="modal">
+    <button class="modal-close" onclick="closeOverlay()">✕</button>
+    <span class="modal-icon" id="mIcon"></span>
+    <div class="modal-name" id="mName"></div>
+    <div class="modal-cat" id="mCat"></div>
+    <div class="modal-divider"></div>
+    <div class="explain-box">
+      <div class="explain-label">🧒 Simple explanation</div>
+      <div class="explain-text" id="mDesc"></div>
+    </div>
+    <div class="explain-box">
+      <div class="explain-label">🔧 What it actually does</div>
+      <div class="explain-text" id="mReal"></div>
+    </div>
+    <div class="fun-fact" id="mFact"></div>
+    <div class="modal-actions">
+      <button class="modal-learn-btn" id="learnBtn" onclick="markLearned()">⭐ Mark as learned!</button>
+      <button class="modal-next-btn" onclick="nextSkill()">Next skill →</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── Data ──────────────────────────────────────────────────────────────────────
+const CATS = {
+  "Data Tools":           { color: "#00e5a0", emoji: "📊" },
+  "Visualisation":        { color: "#4fc3f7", emoji: "🎨" },
+  "Machine Learning":     { color: "#b388ff", emoji: "🤖" },
+  "Frontend":             { color: "#4fc3f7", emoji: "🖥️" },
+  "Cloud AWS":            { color: "#4fc3f7", emoji: "☁️" },
+  "Databases":            { color: "#00e5a0", emoji: "🗄️" },
+  "Backend":              { color: "#ff6b6b", emoji: "⚙️" },
+  "API Gateway":          { color: "#ff6b6b", emoji: "🔌" },
+  "MLOps & Deployment":   { color: "#ffca28", emoji: "🚢" },
+  "Big Data":             { color: "#69f0ae", emoji: "🌊" },
+  "Generative AI & LLMs": { color: "#b388ff", emoji: "✨" },
+  "Statistics & ML":      { color: "#a7a9be", emoji: "📐" },
+  "Version Control":      { color: "#a7a9be", emoji: "🌿" },
+};
+
+const SKILLS = [
+  { name:"Pandas", cat:"Data Tools", icon:"🐼",
+    desc:"Imagine you have a huge messy table of numbers, like a giant spreadsheet. Pandas is like a magic helper that tidies it up, sorts it, and finds things for you, super fast!",
+    real:"A Python library for working with data in tables (DataFrames). You can filter rows, calculate averages, merge datasets, and clean messy data with simple commands.",
+    fact:"🐼 Fun fact: Pandas was created in 2008 by Wes McKinney. The name comes from 'Panel Data', not the cute animal, but the panda logo is adorable anyway!" },
+  { name:"NumPy", cat:"Data Tools", icon:"🔢",
+    desc:"When you need to do maths with a LOT of numbers all at the same time, like adding 1 million numbers together in one go, NumPy does that in a blink!",
+    real:"NumPy lets you do fast maths on huge arrays and matrices of numbers. It's the foundation that Pandas, TensorFlow, and almost every Python data tool is built on.",
+    fact:"⚡ Fun fact: NumPy can multiply two arrays of 1 million numbers each in about 3 milliseconds. Doing it the normal Python way would take 30× longer!" },
+  { name:"Matplotlib", cat:"Data Tools", icon:"📈",
+    desc:"After you have all your numbers, Matplotlib draws pretty pictures, like bar charts and line graphs, so you can see what the numbers mean without reading them all.",
+    real:"A Python plotting library. You can create bar charts, line plots, scatter plots, pie charts, and more, all customisable with colours, labels, and styles.",
+    fact:"🎨 Fun fact: Matplotlib was created in 2003 to mimic the plotting style of MATLAB. Scientists at NASA have used it to visualise data from space missions!" },
+  { name:"SQL", cat:"Data Tools", icon:"🗂️",
+    desc:"Imagine a giant filing cabinet with millions of folders. SQL is how you ask it questions like 'find all folders from last Tuesday' and it finds them instantly!",
+    real:"SQL (Structured Query Language) is how you talk to databases. You write questions called 'queries' to find, add, update, or delete data stored in tables.",
+    fact:"📅 Fun fact: SQL was invented at IBM in the 1970s. It's over 50 years old and still one of the most in-demand skills for jobs today!" },
+  { name:"Excel", cat:"Data Tools", icon:"📋",
+    desc:"You know how you can put things in boxes on paper? Excel is like magic paper on a computer where the boxes can do your sums automatically!",
+    real:"Microsoft's spreadsheet tool with formulas, Power Query for data cleaning, and Pivot Tables for summarising large datasets without writing any code.",
+    fact:"💡 Fun fact: Over 1.1 billion people use Microsoft Office. Excel has over 400 built-in functions, from simple sums to complex statistical models!" },
+  { name:"Power BI", cat:"Visualisation", icon:"💡",
+    desc:"Power BI takes boring tables of numbers and turns them into colourful dashboards, like a car's dashboard, so bosses can see everything at a glance!",
+    real:"Microsoft's business intelligence tool. Connect it to your data, drag and drop charts, and create interactive dashboards that update automatically.",
+    fact:"📊 Fun fact: Power BI is used by over 250,000 organisations worldwide. You can connect it to over 100 different data sources, from Excel to live websites!" },
+  { name:"Tableau", cat:"Visualisation", icon:"🎨",
+    desc:"Tableau is like a super colouring book for data. You drag numbers in and it magically draws beautiful charts and maps to show what's happening.",
+    real:"A visual analytics platform. Drag and drop fields to build interactive charts, maps, and dashboards without writing code. Very popular in business teams.",
+    fact:"🗺️ Fun fact: Tableau started as a Stanford research project! It can plot data on real maps, so you can see which cities buy the most of your product." },
+  { name:"React Dashboards", cat:"Visualisation", icon:"⚛️",
+    desc:"React dashboards are like a fancy TV screen for a business, showing live charts and numbers that update all by themselves, no refresh needed!",
+    real:"Custom web dashboards built with React. Unlike off-the-shelf tools, you can build exactly what you need with live data, custom charts, and interactive controls.",
+    fact:"🔄 Fun fact: React was created by Facebook in 2013. Instagram, Netflix, Airbnb, and thousands of other apps you use every day are all built with React!" },
+  { name:"Scikit-learn", cat:"Machine Learning", icon:"🤖",
+    desc:"Scikit-learn teaches the computer to spot patterns, like 'these emails always feel spammy', without you writing every single rule yourself!",
+    real:"A Python library with ready-made machine learning algorithms. Classification, regression, clustering, pick an algorithm, give it data, and it learns the patterns.",
+    fact:"📬 Fun fact: Your email spam filter probably uses similar techniques to what's inside Scikit-learn. It was started as a Google Summer of Code project in 2007!" },
+  { name:"TensorFlow", cat:"Machine Learning", icon:"🧠",
+    desc:"TensorFlow is like a gym for computers. It trains a computer brain over and over until it gets really good at recognising pictures or voices.",
+    real:"Google's deep learning framework. Build neural networks with layers of mathematical functions, train them on data, and use them to make predictions.",
+    fact:"🌍 Fun fact: TensorFlow is used inside Google Search, Google Translate, and Gmail's Smart Reply. It processes billions of operations every single day!" },
+  { name:"PyTorch", cat:"Machine Learning", icon:"🔥",
+    desc:"PyTorch is another computer-brain gym, but it lets scientists experiment more easily, like having building blocks you can rearrange whenever you want.",
+    real:"Meta's deep learning framework, very popular in research. It lets you build and tweak neural networks flexibly, making experimentation fast and intuitive.",
+    fact:"🏆 Fun fact: Most cutting-edge AI research papers in 2024 used PyTorch. ChatGPT and many modern AI systems were trained using PyTorch!" },
+  { name:"Hugging Face", cat:"Machine Learning", icon:"🤗",
+    desc:"Hugging Face is a big library of ready-made smart brains you can borrow for free! Need one that understands language? Just pick one off the shelf!",
+    real:"A platform with thousands of pre-trained AI models you can download and use. Language models, image classifiers, speech recognisers, all free to try.",
+    fact:"🤗 Fun fact: Hugging Face hosts over 500,000 models and is used by companies like Google, Amazon, and Microsoft. The 'Hub' is like GitHub but for AI models!" },
+  { name:"AutoML", cat:"Machine Learning", icon:"✨",
+    desc:"AutoML is like a robot that builds other robots for you. You give it data and it figures out the best way to learn from it, no expert needed!",
+    real:"Automated Machine Learning. Instead of manually choosing and tuning algorithms, AutoML tries hundreds of combinations automatically and picks the best one.",
+    fact:"⚙️ Fun fact: Google's AutoML can design neural networks that outperform ones built by expert engineers, in some cases creating architectures humans wouldn't think of!" },
+  { name:"React", cat:"Frontend", icon:"⚛️",
+    desc:"React is like digital LEGO for websites. You build small pieces (buttons, menus) and snap them together to make a whole web page!",
+    real:"A JavaScript library for building user interfaces. You create reusable 'components' that manage their own data and combine into complex interactive UIs.",
+    fact:"🏗️ Fun fact: React was created by Jordan Walke at Facebook in 2013 and open-sourced. Facebook itself, Instagram, and WhatsApp Web are all built with React!" },
+  { name:"S3", cat:"Cloud AWS", icon:"🪣",
+    desc:"S3 is like a giant magic bucket in the clouds where you can store photos, videos, or files, as many as you want, and get them back anytime!",
+    real:"Amazon Simple Storage Service. Store any file (images, videos, backups, data) at virtually unlimited scale. Pay only for what you store and access.",
+    fact:"🌐 Fun fact: Amazon S3 stores over 300 trillion objects and regularly handles millions of requests per second. A huge chunk of the internet's files live in S3!" },
+  { name:"Lambda", cat:"Cloud AWS", icon:"⚡",
+    desc:"Lambda is a tiny helper that wakes up only when you need it, does one job quickly (like sending an email), then goes back to sleep. You only pay while it's awake!",
+    real:"AWS Lambda runs your code without you managing any servers. It scales automatically, from zero requests to millions per second, and you only pay per execution.",
+    fact:"💰 Fun fact: Lambda's free tier gives you 1 million requests per month for free! Many small apps run entirely on Lambda and pay virtually nothing." },
+  { name:"EC2", cat:"Cloud AWS", icon:"💻",
+    desc:"EC2 is like renting a computer that lives in Amazon's building. You can make it big or small, and turn it off when you don't need it to save money!",
+    real:"Amazon's virtual machines in the cloud. Choose your CPU, RAM, and storage, install whatever you need, and scale up or down anytime.",
+    fact:"🖥️ Fun fact: Netflix, Airbnb, and NASA all use EC2. During peak hours Netflix uses tens of thousands of EC2 instances to stream to millions of people simultaneously!" },
+  { name:"SageMaker", cat:"Cloud AWS", icon:"🏋️",
+    desc:"SageMaker is Amazon's special gym for teaching computer brains. It has everything in one place, the equipment, the trainer, and a locker room!",
+    real:"AWS's managed ML platform. Train models at scale, tune hyperparameters automatically, deploy to endpoints, and monitor them, all in one service.",
+    fact:"🔬 Fun fact: SageMaker can train models across hundreds of GPUs simultaneously, cutting training time from weeks to hours for large neural networks!" },
+  { name:"Glue", cat:"Cloud AWS", icon:"🔗",
+    desc:"AWS Glue is like craft glue, it sticks data from different places together so everything is in one place and easy to work with.",
+    real:"A serverless ETL (Extract, Transform, Load) service. It discovers your data's structure, transforms it, and moves it between different AWS services automatically.",
+    fact:"🕷️ Fun fact: Glue includes a 'crawler' that automatically explores your data and figures out its structure, like a spider mapping a web!" },
+  { name:"Kinesis", cat:"Cloud AWS", icon:"🌊",
+    desc:"Kinesis is like a fast-moving river of data. It takes in thousands of events (like clicks) every second and lets you do things with them right away!",
+    real:"AWS's real-time data streaming service. Ingest millions of events per second, log files, clicks, sensor readings, and process or analyse them instantly.",
+    fact:"📱 Fun fact: When you're watching a live stream and see the viewer count update in real time, services like Kinesis are what make that instant counting possible!" },
+  { name:"Aurora PostgreSQL", cat:"Databases", icon:"🐘",
+    desc:"Aurora is a super-fast notebook that remembers everything you write. You can ask it 'find all customers named Sam' and it answers in a flash!",
+    real:"Amazon's cloud-native relational database. Fully compatible with PostgreSQL, but up to 3× faster and scales storage automatically as your data grows.",
+    fact:"⚡ Fun fact: Aurora can automatically replicate your data across 3 availability zones and recover from failure in under 30 seconds, much faster than traditional databases!" },
+  { name:"MongoDB", cat:"Databases", icon:"🍃",
+    desc:"MongoDB is like a junk drawer, instead of neat rows and columns, it stores messy, mixed-up things all together, which can actually be very handy!",
+    real:"A NoSQL document database. Instead of tables, it stores JSON-like documents. Great when your data doesn't have a fixed shape or changes structure frequently.",
+    fact:"🌿 Fun fact: MongoDB is named after 'humongous', it was built to handle enormous amounts of flexible data! Companies like Forbes and Adobe use it." },
+  { name:"Node.js", cat:"Backend", icon:"🟢",
+    desc:"Node.js lets JavaScript, which usually only works in browsers, run on a computer server too. Like teaching a playground game to be played in a library!",
+    real:"A JavaScript runtime for building server-side applications. It's event-driven and non-blocking, meaning it can handle thousands of simultaneous connections efficiently.",
+    fact:"🚀 Fun fact: LinkedIn switched from Ruby to Node.js and reduced their servers from 30 to 3 while handling twice the traffic. That's how efficient it is!" },
+  { name:"Express.js", cat:"Backend", icon:"🚂",
+    desc:"Express is like a friendly train conductor for your website. When someone asks for a page, Express makes sure the right answer gets sent back quickly!",
+    real:"A minimal Node.js web framework. Define routes (URL patterns) and what happens when someone visits them. Used by millions of APIs and web apps.",
+    fact:"📦 Fun fact: Express is downloaded over 30 million times per week on npm! It's so popular it's often called the 'de facto standard' for Node.js web apps." },
+  { name:"IFTTT", cat:"API Gateway", icon:"🔀",
+    desc:"IFTTT means 'If This Then That'. Like: IF it rains THEN send me a text. It connects apps so they talk to each other automatically!",
+    real:"A no-code automation platform. Connect different apps and devices with trigger-action rules. When event X happens in app A, automatically do Y in app B.",
+    fact:"🔗 Fun fact: IFTTT supports over 700 different apps and services, from smart home devices to social media. One popular 'Applet' saves every Instagram photo to Dropbox!" },
+  { name:"MQTT", cat:"API Gateway", icon:"📡",
+    desc:"MQTT is how tiny devices like thermostats whisper messages to each other over the internet. Very lightweight, like sending a text instead of a letter!",
+    real:"A lightweight messaging protocol designed for IoT devices. Devices publish messages to 'topics' on a broker, and other devices subscribe to receive them.",
+    fact:"🛰️ Fun fact: MQTT was invented in 1999 to monitor an oil pipeline via satellite, where bandwidth was extremely limited. Now it powers billions of IoT devices!" },
+  { name:"MLflow", cat:"MLOps & Deployment", icon:"📝",
+    desc:"MLflow is like a diary for your computer experiments. It remembers exactly what you tried, what worked, and what didn't, so you never forget!",
+    real:"An open-source platform for managing the ML lifecycle. Track experiments, log metrics, package models, and deploy them, all in one place with a visual UI.",
+    fact:"📓 Fun fact: Without MLflow, data scientists often lose track of which model version performed best. MLflow is like git for machine learning experiments!" },
+  { name:"Docker", cat:"MLOps & Deployment", icon:"🐳",
+    desc:"Docker packs your program into a little box with everything it needs. You can move the box to any computer and it works perfectly, like packed lunch!",
+    real:"A containerisation platform. Package your app and all its dependencies into a 'container' that runs identically on any machine, development, testing, or production.",
+    fact:"📦 Fun fact: Docker was released in 2013 and completely changed software deployment. 'It works on my machine' is no longer an excuse when using Docker containers!" },
+  { name:"CI/CD", cat:"MLOps & Deployment", icon:"🔄",
+    desc:"CI/CD is like a robot that checks your homework as soon as you write it, and if it's correct, automatically hands it in for you. No forgetting allowed!",
+    real:"Continuous Integration/Continuous Deployment. Every time code is pushed, automated pipelines run tests, check quality, build the app, and deploy it, automatically.",
+    fact:"🤖 Fun fact: Companies like Netflix deploy code to production thousands of times per day using CI/CD. This means new features reach users within minutes of being written!" },
+  { name:"SageMaker Endpoints", cat:"MLOps & Deployment", icon:"🚀",
+    desc:"An endpoint is like a little window you can knock on to ask the computer brain a question anytime. It's always open, waiting for you to ask!",
+    real:"SageMaker hosting endpoints. Deploy your trained ML model behind a REST API that scales automatically. Send data in, get predictions back, instantly.",
+    fact:"🎯 Fun fact: SageMaker endpoints can automatically scale from 0 to thousands of instances based on traffic, and scale back down to save costs when quiet." },
+  { name:"Apache Spark", cat:"Big Data", icon:"🔥",
+    desc:"Spark is like having thousands of helpers sort a giant pile of cards at the same time. Jobs that would take days get done in minutes!",
+    real:"A distributed computing engine. Splits huge data processing jobs across many machines in parallel. Supports Python (PySpark), SQL, ML, and streaming.",
+    fact:"⚡ Fun fact: Spark can be 100× faster than Hadoop for in-memory processing. It was created at UC Berkeley in 2009 and is now used by 80% of Fortune 500 companies!" },
+  { name:"Prompt Engineering", cat:"Generative AI & LLMs", icon:"💬",
+    desc:"Prompt engineering is the art of asking AI questions really cleverly, like knowing the magic words to get exactly what you want!",
+    real:"The practice of crafting inputs (prompts) to get the best outputs from AI language models. Includes techniques like few-shot examples, chain-of-thought reasoning, and role-setting.",
+    fact:"🪄 Fun fact: The difference between a vague and a well-crafted prompt can mean the difference between a useless answer and a perfect one, same AI, very different results!" },
+  { name:"RAG", cat:"Generative AI & LLMs", icon:"📚",
+    desc:"RAG lets AI read your own documents first before answering. Like giving it a cheat sheet so it can answer questions about your specific stuff!",
+    real:"Retrieval-Augmented Generation. Before generating an answer, the system retrieves relevant documents from a knowledge base and gives them to the LLM as context.",
+    fact:"📖 Fun fact: RAG was introduced by Facebook AI in 2020. It solves the biggest problem with LLMs, they don't know about your private data or recent events!" },
+  { name:"LangChain", cat:"Generative AI & LLMs", icon:"⛓️",
+    desc:"LangChain chains AI steps together like a recipe, first look something up, then summarise it, then send an email. All automatically!",
+    real:"A framework for building LLM-powered applications. Chain together prompts, tools, memory, and agents to create multi-step AI workflows and applications.",
+    fact:"🔗 Fun fact: LangChain went from zero to 75,000 GitHub stars in just one year, one of the fastest-growing open source projects ever! It has a huge active community." },
+  { name:"LlamaIndex", cat:"Generative AI & LLMs", icon:"🦙",
+    desc:"LlamaIndex organises your documents so an AI can search through thousands of pages super fast, like a librarian who never forgets anything!",
+    real:"A data framework for LLM applications. Ingest, index, and query documents using vector search so an LLM can answer questions grounded in your own content.",
+    fact:"🗂️ Fun fact: LlamaIndex can index a thousand-page document and let an AI answer questions about it in seconds. It converts text into mathematical vectors for lightning-fast search!" },
+  { name:"Probability & Statistics", cat:"Statistics & ML", icon:"🎲",
+    desc:"This is maths about chances, like figuring out how likely it is to rain tomorrow, or whether a coin flip is really fair!",
+    real:"The mathematical foundation of data science. Probability quantifies uncertainty; statistics lets you draw conclusions from data samples and test hypotheses.",
+    fact:"🎰 Fun fact: The same maths used in statistics helps casinos calculate their edge, and also helps doctors understand how effective medicines really are!" },
+  { name:"A/B Testing", cat:"Statistics & ML", icon:"🧪",
+    desc:"A/B testing is like showing half your friends a red button and half a blue button, and seeing which colour gets more clicks. Science, but fun!",
+    real:"A controlled experiment where two versions are shown to different user groups. Statistical analysis determines if differences in outcomes are real or just random chance.",
+    fact:"🔵🔴 Fun fact: Amazon once found that every 100ms of load time cost them 1% in sales. They discovered this through rigorous A/B testing of page speed!" },
+  { name:"Feature Engineering", cat:"Statistics & ML", icon:"🔧",
+    desc:"Features are the clues you give to the computer brain. Feature engineering means finding the BEST clues, like picking the right puzzle pieces!",
+    real:"The process of creating, selecting, and transforming input variables for ML models. Good features often matter more than the choice of algorithm.",
+    fact:"🧩 Fun fact: In the famous Netflix Prize competition, the winning team's secret weapon wasn't a fancy algorithm, it was clever feature engineering of user viewing patterns!" },
+  { name:"Model Evaluation", cat:"Statistics & ML", icon:"📐",
+    desc:"After teaching a computer brain, you test it, like giving it a quiz. F1, ROC/AUC and Precision/Recall are the scores that tell you how well it did!",
+    real:"Measuring ML model performance using metrics like F1 score, ROC/AUC, precision, and recall. Different metrics matter for different problems (e.g. fraud detection vs. spam).",
+    fact:"⚖️ Fun fact: Accuracy alone can be misleading! A model that says 'no fraud' every time would be 99.9% accurate on fraud data, but completely useless. That's why F1 exists!" },
+  { name:"SHAP", cat:"Statistics & ML", icon:"🔍",
+    desc:"SHAP lets you peek inside the computer brain and ask WHY it made a decision, and by exactly how much each clue (feature) pushed it that way!",
+    real:"SHapley Additive exPlanations. Based on game theory, SHAP assigns every feature a contribution score for each individual prediction. Works with any ML model.",
+    fact:"🎮 Fun fact: SHAP is based on 'Shapley values' from game theory, a maths concept invented in the 1950s to fairly split rewards between teammates. Now it explains AI!" },
+  { name:"LIME", cat:"Statistics & ML", icon:"🍋",
+    desc:"LIME is like asking the computer brain to explain its thinking using really simple words, it builds a tiny easy-to-understand model just to explain one decision!",
+    real:"Local Interpretable Model-agnostic Explanations. LIME explains a single prediction by building a simple linear model around that specific data point to approximate the complex model locally.",
+    fact:"⚖️ Fun fact: LIME can explain any black-box model, even if you have no idea how it works inside. It's 'model-agnostic', meaning it works on absolutely any AI!" },
+  { name:"Hypothesis Testing", cat:"Statistics & ML", icon:"🧫",
+    desc:"Hypothesis testing is like being a detective, you make a guess, collect clues (data), and then use maths to figure out if your guess was right or just lucky!",
+    real:"A statistical method to decide whether an observation is real or due to random chance. You set a null hypothesis, collect data, and compute a p-value to accept or reject it.",
+    fact:"📊 Fun fact: Hypothesis testing was developed in the 1920s by Ronald Fisher while studying crop experiments. The famous 'p < 0.05' threshold he suggested was just a rule of thumb, yet it stuck everywhere!" },
+  { name:"Git", cat:"Version Control", icon:"🌿",
+    desc:"Git is like a save button that remembers EVERY version of your work forever. Made a mistake? Just go back to yesterday's save!",
+    real:"A distributed version control system. Track every change to your code, create branches to experiment safely, and merge changes back. The foundation of all coding collaboration.",
+    fact:"🐧 Fun fact: Git was created by Linus Torvalds, the same person who created the Linux operating system, in just 10 days in 2005. He wrote it to manage Linux's own code!" },
+  { name:"GitHub / GitLab", cat:"Version Control", icon:"🐙",
+    desc:"GitHub and GitLab are websites where teams share their code, like a Google Drive, but for programs, with extra superpowers!",
+    real:"Web-based Git repository hosting with collaboration features: pull requests, code review, issue tracking, wikis, and CI/CD pipelines all in one platform.",
+    fact:"🐙 Fun fact: GitHub has over 100 million developers and hosts over 400 million repositories. Including the code for Linux, React, Python, and almost every major open source project!" },
+  { name:"Pull Requests", cat:"Version Control", icon:"📬",
+    desc:"A pull request is like raising your hand and saying 'I made changes, can someone check them before we use them?' It keeps things safe!",
+    real:"A GitHub/GitLab feature to propose merging code changes. Team members review the code, leave comments, request changes, and approve, before anything goes to production.",
+    fact:"👀 Fun fact: At major tech companies, every single line of code that goes to production must be reviewed by at least one other engineer via pull requests. No exceptions!" },
+  { name:"Branching & Merging", cat:"Version Control", icon:"🌳",
+    desc:"Branching is like making a copy of your LEGO creation so you can try something new without breaking the original. Merging is snapping it back together when you're happy!",
+    real:"Git branches let you work on a feature or fix in isolation from the main codebase. Once done, you merge the branch back in, Git automatically combines the changes.",
+    fact:"🌱 Fun fact: Big projects like the Linux kernel have thousands of active branches at any time. Git can merge branches with thousands of changes in milliseconds!" },
+  { name:"Code Review", cat:"Version Control", icon:"🧐",
+    desc:"Code review is like a spelling check but for computer instructions, a teammate reads your code to catch mistakes, suggest better ideas, and make sure everything makes sense!",
+    real:"A practice where developers read each other's code before it's merged. Reviews catch bugs, improve readability, share knowledge across the team, and enforce quality standards.",
+    fact:"🐛 Fun fact: Studies show code review catches up to 85% of bugs before they reach users, far more than automated testing alone. It's one of the highest-value practices in software engineering!" },
+  { name:"GitHub Actions", cat:"Version Control", icon:"⚙️",
+    desc:"GitHub Actions are robots that spring into action whenever you save code, automatically running tests, checks, or sending updates without you lifting a finger!",
+    real:"GitHub's built-in CI/CD platform. Write YAML workflows that trigger on events (push, PR, schedule) and run jobs in the cloud, testing, building, deploying automatically.",
+    fact:"🤖 Fun fact: GitHub Actions has a 'Marketplace' with thousands of pre-built Actions. You can add code quality checks, deploy to AWS, or even tweet whenever you release a new version!" },
+  { name:"gitignore & Secrets", cat:"Version Control", icon:"🔒",
+    desc:"gitignore tells Git which files to ignore (like temp files). Secrets management keeps passwords and API keys safe and out of your code!",
+    real:"A .gitignore file lists files/folders Git should never track. Secrets management stores sensitive credentials (API keys, passwords) separately, never hardcoded in code.",
+    fact:"🚨 Fun fact: Thousands of developers accidentally commit API keys to GitHub every day. Bots scan public repos 24/7 looking for secrets, and can rack up massive bills in hours!" },
+];
+
+// ── State ─────────────────────────────────────────────────────────────────────
+let learned = new Set(JSON.parse(localStorage.getItem('learnedSkills') || '[]'));
+let activeFilter = 'All';
+let currentIndex = 0;
+
+function saveState() {
+  localStorage.setItem('learnedSkills', JSON.stringify([...learned]));
+}
+
+// ── Stars background ──────────────────────────────────────────────────────────
+(function(){
+  const el = document.getElementById('stars');
+  for(let i=0;i<80;i++){
+    const s = document.createElement('div');
+    s.className='star';
+    const size = Math.random()*2.5+0.5;
+    s.style.cssText=`width:${size}px;height:${size}px;left:${Math.random()*100}%;top:${Math.random()*100}%;
+      --d:${(Math.random()*3+2).toFixed(1)}s;--o:${(Math.random()*0.7+0.2).toFixed(1)};
+      animation-delay:${(Math.random()*3).toFixed(1)}s`;
+    el.appendChild(s);
+  }
+})();
+
+// ── Filters ───────────────────────────────────────────────────────────────────
+function buildFilters(){
+  const cats = ['All', ...Object.keys(CATS)];
+  const el = document.getElementById('filters');
+  el.innerHTML = cats.map(c => {
+    const color = c==='All' ? '#ffffff' : CATS[c].color;
+    const emoji = c==='All' ? '🌟' : CATS[c].emoji;
+    return `<button class="filter-btn${c===activeFilter?' active':''}"
+      style="${c===activeFilter?`background:${color}22;border-color:${color};color:${color}`:`border-color:#2e2b4a`}"
+      onclick="setFilter('${c}')">${emoji} ${c}</button>`;
+  }).join('');
+}
+
+function setFilter(cat){ activeFilter=cat; render(); }
+
+// ── Render ────────────────────────────────────────────────────────────────────
+function render(){
+  const q = document.getElementById('search').value.toLowerCase();
+  const filtered = SKILLS.filter((s,i)=>{
+    const matchCat = activeFilter==='All' || s.cat===activeFilter;
+    const matchQ = !q || s.name.toLowerCase().includes(q) || s.cat.toLowerCase().includes(q) || s.desc.toLowerCase().includes(q);
+    return matchCat && matchQ;
+  });
+
+  const grid = document.getElementById('grid');
+  if(!filtered.length){
+    grid.innerHTML = `<div class="empty"><span>🤔</span>No skills found! Try a different search.</div>`;
+  } else {
+    grid.innerHTML = filtered.map((s,i)=>{
+      const accent = CATS[s.cat]?.color || '#888780';
+      const isLearned = learned.has(s.name);
+      const realIdx = SKILLS.indexOf(s);
+      return `<div class="card${isLearned?' learned':''}"
+        style="--accent:${accent}"
+        onclick="openModal(${realIdx})">
+        <span class="card-icon">${s.icon}</span>
+        <div class="card-name">${s.name}</div>
+        <div class="card-cat">${s.cat}</div>
+        <p class="card-desc">${s.desc.length>110?s.desc.slice(0,110)+'…':s.desc}</p>
+        <button class="card-btn" onclick="event.stopPropagation();openModal(${realIdx})">
+          ${isLearned?'⭐ Learned!':'🔍 Explore'}
+        </button>
+      </div>`;
+    }).join('');
+  }
+
+  updateProgress();
+  buildFilters();
+}
+
+// ── Progress ──────────────────────────────────────────────────────────────────
+function updateProgress(){
+  const pct = Math.round(learned.size / SKILLS.length * 100);
+  document.getElementById('starCount').textContent = learned.size;
+  document.getElementById('progressFill').style.width = pct+'%';
+  document.getElementById('progressText').textContent = pct+'% complete';
+}
+
+// ── Modal ─────────────────────────────────────────────────────────────────────
+function openModal(idx){
+  currentIndex = idx;
+  const s = SKILLS[idx];
+  const accent = CATS[s.cat]?.color || '#888780';
+  document.getElementById('modal').style.setProperty('--modal-accent', accent);
+  document.getElementById('overlay').style.setProperty('--modal-accent', accent);
+  document.getElementById('mIcon').textContent = s.icon;
+  document.getElementById('mName').textContent = s.name;
+  document.getElementById('mCat').textContent = s.cat;
+  document.getElementById('mDesc').textContent = s.desc;
+  document.getElementById('mReal').textContent = s.real;
+  document.getElementById('mFact').textContent = s.fact;
+  const btn = document.getElementById('learnBtn');
+  btn.textContent = learned.has(s.name) ? '✅ Already learned!' : '⭐ Mark as learned!';
+  btn.style.background = learned.has(s.name) ? '#2e2b4a' : accent;
+  btn.style.color = learned.has(s.name) ? '#a7a9be' : '#0f0e17';
+  document.getElementById('overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeOverlay(){
+  document.getElementById('overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function closeModal(e){
+  if(e.target === document.getElementById('overlay')) closeOverlay();
+}
+
+function nextSkill(){
+  openModal((currentIndex+1) % SKILLS.length);
+}
+
+function markLearned(){
+  const s = SKILLS[currentIndex];
+  if(learned.has(s.name)){
+    learned.delete(s.name);
+  } else {
+    learned.add(s.name);
+    confetti(document.getElementById('learnBtn'));
+  }
+  saveState();
+  const accent = CATS[s.cat]?.color || '#888780';
+  const btn = document.getElementById('learnBtn');
+  btn.textContent = learned.has(s.name) ? '✅ Already learned!' : '⭐ Mark as learned!';
+  btn.style.background = learned.has(s.name) ? '#2e2b4a' : accent;
+  btn.style.color = learned.has(s.name) ? '#a7a9be' : '#0f0e17';
+  render();
+}
+
+// ── Confetti ──────────────────────────────────────────────────────────────────
+function confetti(el){
+  const rect = el.getBoundingClientRect();
+  const colors = ['#00e5a0','#4fc3f7','#b388ff','#ff6b6b','#ffca28','#f48fb1'];
+  for(let i=0;i<18;i++){
+    const p = document.createElement('div');
+    p.className='confetti-piece';
+    p.style.cssText=`
+      left:${rect.left+rect.width/2+((Math.random()-0.5)*120)}px;
+      top:${rect.top-10}px;
+      background:${colors[i%colors.length]};
+      transform:rotate(${Math.random()*360}deg);
+      width:${Math.random()*8+6}px;
+      height:${Math.random()*8+6}px;
+      animation-duration:${(Math.random()*0.5+0.9).toFixed(2)}s;
+      animation-delay:${(Math.random()*0.2).toFixed(2)}s;
+    `;
+    document.body.appendChild(p);
+    setTimeout(()=>p.remove(), 1500);
+  }
+}
+
+// keyboard
+document.addEventListener('keydown', e=>{
+  if(e.key==='Escape') closeOverlay();
+  if(e.key==='ArrowRight' && document.getElementById('overlay').classList.contains('open')) nextSkill();
+});
+
+// ── Init ──────────────────────────────────────────────────────────────────────
+render();
+</script>
+</body>
+</html>
