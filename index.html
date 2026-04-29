@@ -393,6 +393,69 @@
   ::-webkit-scrollbar { width: 6px; }
   ::-webkit-scrollbar-track { background: var(--bg); }
   ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 6px; }
+
+  /* ── Workflow tab ── */
+  .wf-wrap { max-width: 800px; margin: 0 auto; padding: 0 16px 80px; }
+  .wf-intro { text-align:center; margin-bottom:40px; }
+  .wf-intro p { color:var(--sub); font-size:1rem; font-weight:600; line-height:1.7; max-width:600px; margin:0 auto; }
+
+  .wf-step { display:flex; gap:0; margin-bottom:0; }
+  .wf-step-left { display:flex; flex-direction:column; align-items:center; width:56px; flex-shrink:0; }
+  .wf-bubble {
+    width:44px; height:44px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Fredoka One',sans-serif; font-size:1.3rem;
+    color:#0f0e17; flex-shrink:0; z-index:1;
+    box-shadow:0 0 0 5px rgba(255,255,255,0.06);
+  }
+  .wf-line { width:3px; flex:1; min-height:40px; border-radius:3px; margin:4px 0; }
+  .wf-step-right { flex:1; padding:0 0 32px 16px; }
+
+  .wf-card {
+    background:var(--card);
+    border:1.5px solid var(--border);
+    border-top:3px solid var(--sc);
+    border-radius:18px;
+    padding:20px 22px;
+    transition:border-color 0.2s, box-shadow 0.2s;
+  }
+  .wf-card:hover { box-shadow:0 8px 32px rgba(0,0,0,0.35); border-color:var(--sc); }
+
+  .wf-card-head { display:flex; align-items:flex-start; gap:14px; margin-bottom:12px; }
+  .wf-icon { font-size:2.2rem; line-height:1; flex-shrink:0; margin-top:2px; }
+  .wf-title { font-family:'Fredoka One',sans-serif; font-size:1.25rem; color:var(--text); line-height:1.2; }
+  .wf-subtitle { font-size:0.78rem; font-weight:800; color:var(--sc); text-transform:uppercase; letter-spacing:0.06em; margin-top:3px; }
+  .wf-desc { font-size:0.92rem; color:var(--sub); line-height:1.7; font-weight:600; margin-bottom:14px; }
+  .wf-desc strong { color:var(--text); }
+
+  .wf-skills-row { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:14px; }
+  .wf-pill {
+    background:color-mix(in srgb, var(--pc) 15%, transparent);
+    border:1.5px solid color-mix(in srgb, var(--pc) 40%, transparent);
+    color:var(--pc); border-radius:50px;
+    padding:5px 13px; font-size:0.8rem; font-weight:800;
+  }
+  .wf-callout {
+    background:var(--surface); border-left:3px solid var(--sc);
+    border-radius:0 10px 10px 0; padding:10px 14px;
+    font-size:0.85rem; color:var(--sub); font-weight:700; line-height:1.5;
+  }
+
+  /* summary bar */
+  .wf-summary {
+    background:var(--surface); border:1.5px solid var(--border);
+    border-radius:20px; padding:24px 20px; text-align:center; margin-top:8px;
+  }
+  .wf-summary-title { font-family:'Fredoka One',sans-serif; font-size:1.3rem; color:var(--text); margin-bottom:16px; }
+  .wf-summary-flow { display:flex; flex-wrap:wrap; gap:6px; justify-content:center; align-items:center; }
+  .wf-flow-item {
+    background:color-mix(in srgb, var(--fc) 15%, transparent);
+    border:1.5px solid color-mix(in srgb, var(--fc) 35%, transparent);
+    color:var(--fc); border-radius:50px;
+    padding:6px 14px; font-size:0.83rem; font-weight:800;
+  }
+  .wf-arrow { color:var(--sub); font-size:1.1rem; font-weight:900; }
+
   /* ── Tab nav ── */
   .tab-nav {
     position: relative; z-index: 1;
@@ -520,6 +583,7 @@
 <div class="tab-nav">
   <button class="tab-btn active" id="tab-skills" onclick="switchTab('skills')">🃏 All Skills</button>
   <button class="tab-btn" id="tab-roadmap" onclick="switchTab('roadmap')">🗺️ Learning Roadmap</button>
+  <button class="tab-btn" id="tab-workflow" onclick="switchTab('workflow')">⚡ How It All Works</button>
 </div>
 
 <div id="skills-view">
@@ -533,6 +597,266 @@
       <p>This is the order to learn these skills, like a treasure map! 🗺️ Each phase builds on the one before it. Click any skill pill to learn about it!</p>
     </div>
     <div id="roadmap-phases"></div>
+  </div>
+</div>
+
+<div id="workflow-view" style="display:none;position:relative;z-index:1;">
+  <div class="wf-wrap">
+
+    <div class="wf-intro">
+      <p>Ever wonder how a real app gets built  , from the first line of code to millions of users? Here's the full journey, step by step. 👇</p>
+    </div>
+
+    <!-- STEP 1: Frontend -->
+    <div class="wf-step" data-color="#4fc3f7">
+      <div class="wf-step-left">
+        <div class="wf-bubble" style="background:#4fc3f7">
+          <span>1</span>
+        </div>
+        <div class="wf-line" style="background:linear-gradient(to bottom,#4fc3f7,#ff69b4)"></div>
+      </div>
+      <div class="wf-step-right">
+        <div class="wf-card" style="--sc:#4fc3f7">
+          <div class="wf-card-head">
+            <span class="wf-icon">🖥️</span>
+            <div>
+              <div class="wf-title">Frontend  , What Users See</div>
+              <div class="wf-subtitle">React · HTML · CSS · JavaScript</div>
+            </div>
+          </div>
+          <p class="wf-desc">This is the face of your app  , everything the user clicks, reads and interacts with. Built with <strong>React</strong>, it's like designing the inside of a shop: the layout, buttons, colours and menus. The frontend runs entirely in the user's browser.</p>
+          <div class="wf-skills-row">
+            <span class="wf-pill" style="--pc:#4fc3f7">⚛️ React</span>
+            <span class="wf-pill" style="--pc:#4fc3f7">🖥️ React Dashboards</span>
+          </div>
+          <div class="wf-callout">💡 Think of it as the shop window  , pretty, interactive, but it needs the warehouse (backend) to actually deliver the goods.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 2: Backend -->
+    <div class="wf-step" data-color="#ff69b4">
+      <div class="wf-step-left">
+        <div class="wf-bubble" style="background:#ff69b4">
+          <span>2</span>
+        </div>
+        <div class="wf-line" style="background:linear-gradient(to bottom,#ff69b4,#00e5a0)"></div>
+      </div>
+      <div class="wf-step-right">
+        <div class="wf-card" style="--sc:#ff69b4">
+          <div class="wf-card-head">
+            <span class="wf-icon">⚙️</span>
+            <div>
+              <div class="wf-title">Backend  , The Brain</div>
+              <div class="wf-subtitle">Node.js · Express.js</div>
+            </div>
+          </div>
+          <p class="wf-desc">The backend is the engine room  , nobody sees it, but everything depends on it. Built with <strong>Node.js + Express.js</strong>, it handles the logic: who can log in, what data to fetch, what rules to apply. It sits between the frontend and the database.</p>
+          <div class="wf-skills-row">
+            <span class="wf-pill" style="--pc:#ff69b4">🟢 Node.js</span>
+            <span class="wf-pill" style="--pc:#ff69b4">🚂 Express.js</span>
+          </div>
+          <div class="wf-callout">💡 Think of it as the kitchen of a restaurant  , customers (frontend) never enter, but every order goes through it.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 3: Database -->
+    <div class="wf-step" data-color="#00e5a0">
+      <div class="wf-step-left">
+        <div class="wf-bubble" style="background:#00e5a0">
+          <span>3</span>
+        </div>
+        <div class="wf-line" style="background:linear-gradient(to bottom,#00e5a0,#ff6b6b)"></div>
+      </div>
+      <div class="wf-step-right">
+        <div class="wf-card" style="--sc:#00e5a0">
+          <div class="wf-card-head">
+            <span class="wf-icon">🗄️</span>
+            <div>
+              <div class="wf-title">Database  , Where Data Lives</div>
+              <div class="wf-subtitle">PostgreSQL · MongoDB · SQL</div>
+            </div>
+          </div>
+          <p class="wf-desc">Every piece of data  , user accounts, orders, messages  , is stored in a <strong>database</strong>. The backend connects to it, reads from it and writes to it. <strong>PostgreSQL</strong> is great for structured data (like tables), <strong>MongoDB</strong> for flexible data.</p>
+          <div class="wf-skills-row">
+            <span class="wf-pill" style="--pc:#00e5a0">🐘 Aurora PostgreSQL</span>
+            <span class="wf-pill" style="--pc:#00e5a0">🍃 MongoDB</span>
+            <span class="wf-pill" style="--pc:#00e5a0">🗂️ SQL</span>
+          </div>
+          <div class="wf-callout">💡 Think of it as a giant filing cabinet. The backend is the only one with a key  , the frontend never touches it directly.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 4: API -->
+    <div class="wf-step" data-color="#ff6b6b">
+      <div class="wf-step-left">
+        <div class="wf-bubble" style="background:#ff6b6b">
+          <span>4</span>
+        </div>
+        <div class="wf-line" style="background:linear-gradient(to bottom,#ff6b6b,#ffca28)"></div>
+      </div>
+      <div class="wf-step-right">
+        <div class="wf-card" style="--sc:#ff6b6b">
+          <div class="wf-card-head">
+            <span class="wf-icon">🔌</span>
+            <div>
+              <div class="wf-title">API  , The Translator</div>
+              <div class="wf-subtitle">REST API · IFTTT · MQTT</div>
+            </div>
+          </div>
+          <p class="wf-desc">The frontend and backend don't speak the same language, so they use an <strong>API</strong> (a set of rules) to talk to each other. The frontend sends a request ("give me user 42's profile") and the backend replies with the data  , like a waiter taking your order to the kitchen and bringing food back.</p>
+          <div class="wf-skills-row">
+            <span class="wf-pill" style="--pc:#ff6b6b">🔀 IFTTT</span>
+            <span class="wf-pill" style="--pc:#ff6b6b">📡 MQTT</span>
+          </div>
+          <div class="wf-callout">💡 API = Application Programming Interface. It's the menu that tells the frontend exactly what it can ask the backend for.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 5: Git & GitHub -->
+    <div class="wf-step" data-color="#ffca28">
+      <div class="wf-step-left">
+        <div class="wf-bubble" style="background:#ffca28">
+          <span>5</span>
+        </div>
+        <div class="wf-line" style="background:linear-gradient(to bottom,#ffca28,#b388ff)"></div>
+      </div>
+      <div class="wf-step-right">
+        <div class="wf-card" style="--sc:#ffca28">
+          <div class="wf-card-head">
+            <span class="wf-icon">🌿</span>
+            <div>
+              <div class="wf-title">Save Your Code  , Git & GitHub</div>
+              <div class="wf-subtitle">Git · GitHub · Branching · Pull Requests</div>
+            </div>
+          </div>
+          <p class="wf-desc">Before deploying anything, you save every version of your code using <strong>Git</strong>. It's like a magic undo button that remembers every change forever. <strong>GitHub</strong> is the online home for that code  , your whole team can collaborate, review and merge changes safely.</p>
+          <div class="wf-skills-row">
+            <span class="wf-pill" style="--pc:#ffca28">🌿 Git</span>
+            <span class="wf-pill" style="--pc:#ffca28">🐙 GitHub / GitLab</span>
+            <span class="wf-pill" style="--pc:#ffca28">🌳 Branching & Merging</span>
+            <span class="wf-pill" style="--pc:#ffca28">📬 Pull Requests</span>
+            <span class="wf-pill" style="--pc:#ffca28">🧐 Code Review</span>
+            <span class="wf-pill" style="--pc:#ffca28">🔒 gitignore & Secrets</span>
+          </div>
+          <div class="wf-callout">💡 No code goes live without being saved in Git first. It's the safety net for every developer on the planet.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 6: CI/CD -->
+    <div class="wf-step" data-color="#b388ff">
+      <div class="wf-step-left">
+        <div class="wf-bubble" style="background:#b388ff">
+          <span>6</span>
+        </div>
+        <div class="wf-line" style="background:linear-gradient(to bottom,#b388ff,#4fc3f7)"></div>
+      </div>
+      <div class="wf-step-right">
+        <div class="wf-card" style="--sc:#b388ff">
+          <div class="wf-card-head">
+            <span class="wf-icon">🔄</span>
+            <div>
+              <div class="wf-title">Automate Deployment  , CI/CD</div>
+              <div class="wf-subtitle">GitHub Actions · Docker · CI/CD Pipelines</div>
+            </div>
+          </div>
+          <p class="wf-desc">Once code is pushed to GitHub, <strong>GitHub Actions</strong> automatically runs tests and checks. If everything passes, <strong>Docker</strong> packages the app into a sealed container (like packed lunch  , works the same everywhere) and the pipeline ships it to the server automatically. Zero manual steps.</p>
+          <div class="wf-skills-row">
+            <span class="wf-pill" style="--pc:#b388ff">⚙️ GitHub Actions</span>
+            <span class="wf-pill" style="--pc:#b388ff">🐳 Docker</span>
+            <span class="wf-pill" style="--pc:#b388ff">🔄 CI/CD</span>
+          </div>
+          <div class="wf-callout">💡 Think of CI/CD as an assembly line  , your code goes in one end, gets tested and packaged, and comes out the other end ready to serve users.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 7: EC2 hosting -->
+    <div class="wf-step" data-color="#4fc3f7">
+      <div class="wf-step-left">
+        <div class="wf-bubble" style="background:#4fc3f7">
+          <span>7</span>
+        </div>
+        <div class="wf-line" style="background:linear-gradient(to bottom,#4fc3f7,#69f0ae)"></div>
+      </div>
+      <div class="wf-step-right">
+        <div class="wf-card" style="--sc:#4fc3f7">
+          <div class="wf-card-head">
+            <span class="wf-icon">☁️</span>
+            <div>
+              <div class="wf-title">Host It  , AWS EC2</div>
+              <div class="wf-subtitle">EC2 · S3 · Lambda · AWS</div>
+            </div>
+          </div>
+          <p class="wf-desc">Your app needs a computer that's switched on 24/7. That's <strong>EC2</strong>  , a virtual computer you rent from Amazon that lives in their data centre. It never sleeps. Users from anywhere in the world can reach your app because EC2 is always on, always connected to the internet.</p>
+          <div class="wf-skills-row">
+            <span class="wf-pill" style="--pc:#4fc3f7">💻 EC2</span>
+            <span class="wf-pill" style="--pc:#4fc3f7">🪣 S3</span>
+            <span class="wf-pill" style="--pc:#4fc3f7">⚡ Lambda</span>
+          </div>
+          <div class="wf-callout">💡 EC2 is a virtual computer in Amazon's building. You pay only for what you use  , and you can make it bigger or smaller in seconds.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 8: Data Science -->
+    <div class="wf-step" data-color="#69f0ae">
+      <div class="wf-step-left">
+        <div class="wf-bubble" style="background:#69f0ae">
+          <span>8</span>
+        </div>
+        <!-- no line after last step -->
+      </div>
+      <div class="wf-step-right">
+        <div class="wf-card" style="--sc:#69f0ae">
+          <div class="wf-card-head">
+            <span class="wf-icon">🔬</span>
+            <div>
+              <div class="wf-title">Now the Data Scientist Plays 🎉</div>
+              <div class="wf-subtitle">Pandas · ML · SageMaker · RAG · LLMs</div>
+            </div>
+          </div>
+          <p class="wf-desc">Only now  , once users are using the app and real data is flowing into the database  , does the <strong>data scientist</strong> enter the picture. They extract that data, clean it with <strong>Pandas</strong>, find patterns with <strong>ML models</strong>, build predictions, and feed insights back into the app. The loop is complete.</p>
+          <div class="wf-skills-row">
+            <span class="wf-pill" style="--pc:#69f0ae">🐼 Pandas</span>
+            <span class="wf-pill" style="--pc:#69f0ae">🔢 NumPy</span>
+            <span class="wf-pill" style="--pc:#69f0ae">🤖 Scikit-learn</span>
+            <span class="wf-pill" style="--pc:#69f0ae">🧠 TensorFlow</span>
+            <span class="wf-pill" style="--pc:#69f0ae">🏋️ SageMaker</span>
+            <span class="wf-pill" style="--pc:#69f0ae">📚 RAG</span>
+            <span class="wf-pill" style="--pc:#69f0ae">✨ LLMs</span>
+          </div>
+          <div class="wf-callout">🎉 This is the payoff! Real users generate real data, and the data scientist turns that into intelligence  , recommendations, predictions, insights  , that make the app smarter over time.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Final summary bar -->
+    <div class="wf-summary">
+      <div class="wf-summary-title">🚀 The Full Journey</div>
+      <div class="wf-summary-flow">
+        <span class="wf-flow-item" style="--fc:#4fc3f7">🖥️ Frontend</span>
+        <span class="wf-arrow">→</span>
+        <span class="wf-flow-item" style="--fc:#ff69b4">⚙️ Backend</span>
+        <span class="wf-arrow">→</span>
+        <span class="wf-flow-item" style="--fc:#00e5a0">🗄️ Database</span>
+        <span class="wf-arrow">→</span>
+        <span class="wf-flow-item" style="--fc:#ff6b6b">🔌 API</span>
+        <span class="wf-arrow">→</span>
+        <span class="wf-flow-item" style="--fc:#ffca28">🌿 Git</span>
+        <span class="wf-arrow">→</span>
+        <span class="wf-flow-item" style="--fc:#b388ff">🔄 CI/CD</span>
+        <span class="wf-arrow">→</span>
+        <span class="wf-flow-item" style="--fc:#4fc3f7">☁️ EC2</span>
+        <span class="wf-arrow">→</span>
+        <span class="wf-flow-item" style="--fc:#69f0ae">🔬 Data Science</span>
+      </div>
+    </div>
+
   </div>
 </div>
 
@@ -1073,20 +1397,29 @@ function buildRoadmap() {
 function switchTab(tab) {
   const skillsView = document.getElementById('skills-view');
   const roadmapView = document.getElementById('roadmap');
+  const workflowView = document.getElementById('workflow-view');
   const btnSkills = document.getElementById('tab-skills');
   const btnRoadmap = document.getElementById('tab-roadmap');
+  const btnWorkflow = document.getElementById('tab-workflow');
+
+  // hide all
+  skillsView.classList.add('hidden');
+  roadmapView.classList.remove('visible');
+  workflowView.style.display = 'none';
+  btnSkills.classList.remove('active');
+  btnRoadmap.classList.remove('active');
+  btnWorkflow.classList.remove('active');
 
   if (tab === 'skills') {
     skillsView.classList.remove('hidden');
-    roadmapView.classList.remove('visible');
     btnSkills.classList.add('active');
-    btnRoadmap.classList.remove('active');
-  } else {
-    skillsView.classList.add('hidden');
+  } else if (tab === 'roadmap') {
     roadmapView.classList.add('visible');
-    btnSkills.classList.remove('active');
     btnRoadmap.classList.add('active');
     buildRoadmap();
+  } else if (tab === 'workflow') {
+    workflowView.style.display = 'block';
+    btnWorkflow.classList.add('active');
   }
 }
 
