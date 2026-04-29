@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Data Science Guide </title>
+<title>Tech Skills Adventure 🚀</title>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Fredoka+One&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -393,6 +393,72 @@
   ::-webkit-scrollbar { width: 6px; }
   ::-webkit-scrollbar-track { background: var(--bg); }
   ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 6px; }
+  /* ── Tab nav ── */
+  .tab-nav {
+    position: relative; z-index: 1;
+    display: flex; justify-content: center; gap: 8px;
+    padding: 0 16px 32px;
+  }
+  .tab-btn {
+    padding: 10px 28px; border-radius: 50px;
+    border: 2px solid var(--border); background: transparent;
+    color: var(--sub); font-family: 'Nunito', sans-serif;
+    font-size: 0.95rem; font-weight: 800; cursor: pointer; transition: all 0.18s;
+  }
+  .tab-btn.active { background: linear-gradient(135deg, var(--teal), var(--blue)); border-color: transparent; color: #0f0e17; }
+  .tab-btn:hover:not(.active) { border-color: var(--blue); color: var(--text); }
+
+  /* ── Roadmap ── */
+  #roadmap { display: none; position: relative; z-index: 1; }
+  #roadmap.visible { display: block; }
+  .hidden { display: none !important; }
+
+  .roadmap-wrap { max-width: 860px; margin: 0 auto; padding: 0 16px 80px; }
+  .roadmap-intro { text-align: center; margin-bottom: 40px; }
+  .roadmap-intro p { color: var(--sub); font-size: 1rem; font-weight: 600; line-height: 1.7; max-width: 620px; margin: 0 auto; }
+
+  .phase { margin-bottom: 0; }
+  .phase-header { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; }
+  .phase-num {
+    width: 46px; height: 46px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Fredoka One', sans-serif; font-size: 1.3rem;
+    color: #0f0e17; flex-shrink: 0;
+    box-shadow: 0 0 0 4px rgba(255,255,255,0.07);
+  }
+  .phase-title { font-family: 'Fredoka One', sans-serif; font-size: 1.35rem; color: var(--text); }
+  .phase-sub { font-size: 0.83rem; color: var(--sub); font-weight: 600; margin-top: 2px; }
+
+  .phase-skills { display: flex; flex-wrap: wrap; gap: 9px; padding-left: 60px; margin-bottom: 6px; }
+  .rskill {
+    display: flex; align-items: center; gap: 7px;
+    background: var(--card); border: 1.5px solid var(--border);
+    border-radius: 50px; padding: 7px 14px 7px 10px;
+    cursor: pointer; transition: all 0.18s;
+    font-size: 0.86rem; font-weight: 700; color: var(--text);
+  }
+  .rskill:hover { transform: translateY(-2px); border-color: var(--raccent); box-shadow: 0 4px 20px rgba(0,0,0,0.35); }
+  .rskill.learned { border-color: var(--amber); }
+  .rskill-icon { font-size: 1.05rem; line-height: 1; }
+  .rskill-star { font-size: 0.75rem; }
+
+  .phase-connector {
+    padding-left: 60px; margin: 2px 0 22px;
+    display: flex; align-items: stretch; gap: 0;
+  }
+  .connector-line {
+    width: 2px; min-height: 40px; border-radius: 2px;
+    background: linear-gradient(to bottom, var(--from), var(--to));
+    margin-left: 21px; margin-right: 14px; flex-shrink: 0;
+  }
+  .connector-text {
+    display: flex; align-items: center;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 20px; padding: 4px 14px;
+    font-size: 0.75rem; font-weight: 700; color: var(--sub);
+    align-self: center;
+  }
+
 </style>
 </head>
 <body>
@@ -401,7 +467,7 @@
 
 <header>
   <span class="hero-emoji">🚀</span>
-  <h1>Data Science Guide</h1>
+  <h1>Tech Skills Adventure</h1>
   <p class="hero-sub">Learn 49 amazing tech tools, explained just for you!</p>
   <div class="score-bar">
     <span>⭐ Stars collected:</span>
@@ -425,8 +491,24 @@
   <input type="text" id="search" placeholder="Search for a skill..." oninput="render()">
 </div>
 
-<div class="filters" id="filters"></div>
-<div class="grid-wrap" id="grid"></div>
+<div class="tab-nav">
+  <button class="tab-btn active" id="tab-skills" onclick="switchTab('skills')">🃏 All Skills</button>
+  <button class="tab-btn" id="tab-roadmap" onclick="switchTab('roadmap')">🗺️ Learning Roadmap</button>
+</div>
+
+<div id="skills-view">
+  <div class="filters" id="filters"></div>
+  <div class="grid-wrap" id="grid"></div>
+</div>
+
+<div id="roadmap">
+  <div class="roadmap-wrap">
+    <div class="roadmap-intro">
+      <p>This is the order to learn these skills, like a treasure map! 🗺️ Each phase builds on the one before it. Click any skill pill to learn about it!</p>
+    </div>
+    <div id="roadmap-phases"></div>
+  </div>
+</div>
 
 <!-- Modal -->
 <div class="overlay" id="overlay" onclick="closeModal(event)">
@@ -820,6 +902,165 @@ function confetti(el){
     `;
     document.body.appendChild(p);
     setTimeout(()=>p.remove(), 1500);
+  }
+}
+
+
+// ── Roadmap data ──────────────────────────────────────────────────────────────
+const ROADMAP = [
+  {
+    phase: 1, title: "The Foundation", emoji: "🏗️", color: "#00e5a0",
+    sub: "Before anything else, learn to store, retrieve and organise data",
+    skills: ["Git","GitHub / GitLab","Branching & Merging","Pull Requests","Code Review","GitHub Actions","gitignore & Secrets"],
+    connector: "Once your code is safe and tracked, learn where data lives →",
+    connTo: "#1D9E75"
+  },
+  {
+    phase: 2, title: "Data Storage", emoji: "🗄️", color: "#1D9E75",
+    sub: "Understand where data lives before you can work with it",
+    skills: ["SQL","Aurora PostgreSQL","MongoDB","S3"],
+    connector: "Now pull that data in and start exploring it →",
+    connTo: "#4fc3f7"
+  },
+  {
+    phase: 3, title: "Data Wrangling & Exploration", emoji: "🔬", color: "#4fc3f7",
+    sub: "Clean, explore and understand your data using Python",
+    skills: ["Python (NumPy)","Pandas","Matplotlib","Excel"],
+    connector: "Once data is clean, apply maths to understand it deeper →",
+    connTo: "#b388ff"
+  },
+  {
+    phase: 4, title: "Statistics & Mathematics", emoji: "📐", color: "#b388ff",
+    sub: "The maths brain behind every good data decision",
+    skills: ["Probability & Statistics","Hypothesis Testing","A/B Testing","Feature Engineering","Model Evaluation"],
+    connector: "Apply this maths to build your first learning models →",
+    connTo: "#ff6b6b"
+  },
+  {
+    phase: 5, title: "Machine Learning", emoji: "🤖", color: "#ff6b6b",
+    sub: "Teach computers to spot patterns and make predictions",
+    skills: ["Scikit-learn","TensorFlow","PyTorch","Hugging Face","AutoML","SHAP","LIME"],
+    connector: "Scale your ML work to massive datasets →",
+    connTo: "#69f0ae"
+  },
+  {
+    phase: 6, title: "Big Data & Pipelines", emoji: "🌊", color: "#69f0ae",
+    sub: "Process data too big for one machine",
+    skills: ["Apache Spark","Kinesis","Glue"],
+    connector: "Move your work to the cloud for scale and reliability →",
+    connTo: "#ffca28"
+  },
+  {
+    phase: 7, title: "Cloud Infrastructure (AWS)", emoji: "☁️", color: "#ffca28",
+    sub: "Run everything on the internet, reliably and at scale",
+    skills: ["EC2","Lambda","S3","SageMaker"],
+    connector: "Package and deploy your models professionally →",
+    connTo: "#f48fb1"
+  },
+  {
+    phase: 8, title: "MLOps & Deployment", emoji: "🚢", color: "#f48fb1",
+    sub: "Ship ML models to the real world and keep them healthy",
+    skills: ["Docker","MLflow","CI/CD","SageMaker Endpoints"],
+    connector: "Build the backend systems that serve your ML outputs →",
+    connTo: "#ff6b6b"
+  },
+  {
+    phase: 9, title: "Backend & APIs", emoji: "⚙️", color: "#ff6b6b",
+    sub: "Create the server logic and connections between systems",
+    skills: ["Node.js","Express.js","IFTTT","MQTT"],
+    connector: "Show the results beautifully on screen →",
+    connTo: "#4fc3f7"
+  },
+  {
+    phase: 10, title: "Visualisation & Frontend", emoji: "🎨", color: "#4fc3f7",
+    sub: "Make data visible, beautiful and interactive for users",
+    skills: ["React","Power BI","Tableau","React Dashboards"],
+    connector: "Finally, supercharge everything with Generative AI →",
+    connTo: "#b388ff"
+  },
+  {
+    phase: 11, title: "Generative AI & LLMs", emoji: "✨", color: "#b388ff",
+    sub: "The cutting edge, build AI-powered products and assistants",
+    skills: ["Prompt Engineering","RAG","LangChain","LlamaIndex"],
+    connector: null
+  },
+];
+
+// Map skill name aliases (roadmap uses display names that might differ slightly)
+const SKILL_ALIAS = { "Python (NumPy)": "NumPy" };
+
+function skillByName(name) {
+  const lookup = SKILL_ALIAS[name] || name;
+  return SKILLS.find(s => s.name === lookup);
+}
+
+function buildRoadmap() {
+  const container = document.getElementById('roadmap-phases');
+  container.innerHTML = '';
+
+  ROADMAP.forEach((phase, pi) => {
+    const phaseEl = document.createElement('div');
+    phaseEl.className = 'phase';
+
+    // header
+    phaseEl.innerHTML = `
+      <div class="phase-header">
+        <div class="phase-num" style="background:${phase.color}">${phase.emoji}</div>
+        <div>
+          <div class="phase-title">Phase ${phase.phase}, ${phase.title}</div>
+          <div class="phase-sub">${phase.sub}</div>
+        </div>
+      </div>
+      <div class="phase-skills" id="rphase-${pi}"></div>
+    `;
+
+    container.appendChild(phaseEl);
+
+    // skill pills
+    const pillsEl = phaseEl.querySelector('.phase-skills');
+    phase.skills.forEach(sname => {
+      const skill = skillByName(sname);
+      if (!skill) return;
+      const idx = SKILLS.indexOf(skill);
+      const accent = CATS[skill.cat]?.color || '#888';
+      const pill = document.createElement('div');
+      pill.className = 'rskill' + (learned.has(skill.name) ? ' learned' : '');
+      pill.style.setProperty('--raccent', accent);
+      pill.innerHTML = `<span class="rskill-icon">${skill.icon}</span><span class="rskill-name">${sname}</span>${learned.has(skill.name)?'<span class="rskill-star">⭐</span>':''}`;
+      pill.onclick = () => openModal(idx);
+      pillsEl.appendChild(pill);
+    });
+
+    // connector
+    if (phase.connector) {
+      const conn = document.createElement('div');
+      conn.className = 'phase-connector';
+      conn.innerHTML = `
+        <div class="connector-line" style="--from:${phase.color};--to:${phase.connTo}"></div>
+        <div class="connector-text">${phase.connector}</div>
+      `;
+      container.appendChild(conn);
+    }
+  });
+}
+
+function switchTab(tab) {
+  const skillsView = document.getElementById('skills-view');
+  const roadmapView = document.getElementById('roadmap');
+  const btnSkills = document.getElementById('tab-skills');
+  const btnRoadmap = document.getElementById('tab-roadmap');
+
+  if (tab === 'skills') {
+    skillsView.classList.remove('hidden');
+    roadmapView.classList.remove('visible');
+    btnSkills.classList.add('active');
+    btnRoadmap.classList.remove('active');
+  } else {
+    skillsView.classList.add('hidden');
+    roadmapView.classList.add('visible');
+    btnSkills.classList.remove('active');
+    btnRoadmap.classList.add('active');
+    buildRoadmap();
   }
 }
 
