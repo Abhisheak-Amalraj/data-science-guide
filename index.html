@@ -456,6 +456,157 @@
   }
   .wf-arrow { color:var(--sub); font-size:1.1rem; font-weight:900; }
 
+
+  /* ── Mini Project ── */
+  .wf-project-bar {
+    display:flex; align-items:center; gap:10px;
+    margin-top:16px; padding-top:16px;
+    border-top:1px dashed var(--border);
+    flex-wrap:wrap;
+  }
+  .wf-project-label {
+    font-size:0.78rem; font-weight:800; text-transform:uppercase;
+    letter-spacing:0.07em; color:var(--sub); flex:0 0 100%;
+    margin-bottom:4px;
+  }
+  .btn-see-example {
+    display:inline-flex; align-items:center; gap:6px;
+    padding:8px 18px; border-radius:50px; border:none; cursor:pointer;
+    font-family:'Nunito',sans-serif; font-size:0.87rem; font-weight:800;
+    background:color-mix(in srgb, var(--sc) 20%, transparent);
+    color:var(--sc); border:1.5px solid color-mix(in srgb,var(--sc) 40%,transparent);
+    transition:all 0.18s;
+  }
+  .btn-see-example:hover { background:color-mix(in srgb,var(--sc) 35%,transparent); transform:translateY(-1px); }
+  .btn-your-turn {
+    display:inline-flex; align-items:center; gap:6px;
+    padding:8px 18px; border-radius:50px; border:none; cursor:pointer;
+    font-family:'Nunito',sans-serif; font-size:0.87rem; font-weight:800;
+    background:linear-gradient(135deg,#ff69b4,#b388ff);
+    color:#0f0e17; transition:all 0.18s;
+  }
+  .btn-your-turn:hover { opacity:0.88; transform:translateY(-1px); }
+
+  /* ── Project Modal ── */
+  .proj-overlay {
+    position:fixed; inset:0; z-index:200;
+    background:rgba(8,8,18,0.92);
+    display:flex; align-items:center; justify-content:center;
+    padding:16px; opacity:0; pointer-events:none;
+    transition:opacity 0.25s; backdrop-filter:blur(8px);
+  }
+  .proj-overlay.open { opacity:1; pointer-events:all; }
+  .proj-modal {
+    background:var(--card); border-radius:24px;
+    max-width:680px; width:100%;
+    max-height:90vh; overflow-y:auto;
+    padding:32px 28px; position:relative;
+    transform:scale(0.92) translateY(16px);
+    transition:transform 0.28s cubic-bezier(.34,1.56,.64,1);
+    border:2px solid var(--pm-color,#4fc3f7);
+  }
+  .proj-overlay.open .proj-modal { transform:scale(1) translateY(0); }
+  .proj-close {
+    position:absolute; top:14px; right:16px;
+    background:var(--surface); border:none; color:var(--sub);
+    font-size:1.3rem; border-radius:50%; width:34px; height:34px;
+    cursor:pointer; display:flex; align-items:center; justify-content:center;
+  }
+  .proj-close:hover { background:var(--border); }
+  .proj-modal-title {
+    font-family:'Fredoka One',sans-serif; font-size:1.6rem;
+    color:var(--text); margin-bottom:4px;
+  }
+  .proj-modal-sub {
+    font-size:0.82rem; font-weight:800; text-transform:uppercase;
+    letter-spacing:0.07em; color:var(--pm-color,#4fc3f7); margin-bottom:20px;
+  }
+
+  /* code block */
+  .code-wrap {
+    background:#0d0c1a; border:1px solid var(--border);
+    border-radius:14px; overflow:hidden; margin:14px 0;
+  }
+  .code-topbar {
+    display:flex; align-items:center; justify-content:space-between;
+    padding:8px 14px; background:#15132a; border-bottom:1px solid var(--border);
+  }
+  .code-lang { font-size:0.75rem; font-weight:800; color:var(--sub); text-transform:uppercase; }
+  .code-copy {
+    font-size:0.75rem; font-weight:800; color:var(--sub);
+    background:none; border:none; cursor:pointer; font-family:'Nunito',sans-serif;
+    transition:color 0.15s;
+  }
+  .code-copy:hover { color:var(--text); }
+  pre {
+    margin:0; padding:16px 18px;
+    font-family:'Courier New',monospace; font-size:0.82rem;
+    line-height:1.65; color:#e0e0f0; overflow-x:auto;
+    white-space:pre;
+  }
+  .hl-kw  { color:#c792ea; }
+  .hl-fn  { color:#82aaff; }
+  .hl-str { color:#c3e88d; }
+  .hl-cm  { color:#546e7a; font-style:italic; }
+  .hl-num { color:#f78c6c; }
+  .hl-tag { color:#ff9cac; }
+  .hl-attr{ color:#ffcb6b; }
+
+  .proj-what {
+    background:var(--surface); border-radius:12px;
+    padding:14px 16px; margin:12px 0;
+    font-size:0.9rem; color:var(--sub); font-weight:600; line-height:1.6;
+  }
+  .proj-what strong { color:var(--text); }
+
+  /* Your Turn modal */
+  .yt-header { margin-bottom:18px; }
+  .yt-problem {
+    background:color-mix(in srgb,var(--pm-color,#ff69b4) 10%,transparent);
+    border:1.5px solid color-mix(in srgb,var(--pm-color,#ff69b4) 30%,transparent);
+    border-radius:14px; padding:18px 20px; margin:14px 0;
+    font-size:0.97rem; color:var(--text); font-weight:700; line-height:1.7;
+  }
+  .difficulty-row { display:flex; gap:8px; margin-bottom:20px; flex-wrap:wrap; }
+  .diff-btn {
+    padding:7px 18px; border-radius:50px; border:2px solid var(--border);
+    background:transparent; color:var(--sub);
+    font-family:'Nunito',sans-serif; font-size:0.85rem; font-weight:800;
+    cursor:pointer; transition:all 0.18s;
+  }
+  .diff-btn[data-d="easy"].active  { background:#00e5a022; border-color:#00e5a0; color:#00e5a0; }
+  .diff-btn[data-d="medium"].active{ background:#ffca2822; border-color:#ffca28; color:#ffca28; }
+  .diff-btn[data-d="hard"].active  { background:#ff6b6b22; border-color:#ff6b6b; color:#ff6b6b; }
+  .diff-btn:hover:not(.active) { border-color:var(--text); color:var(--text); }
+
+  .hints-area { margin-top:4px; }
+  .hint-box {
+    background:var(--surface); border:1px solid var(--border);
+    border-radius:12px; padding:12px 16px; margin-bottom:8px;
+    font-size:0.88rem; color:var(--sub); font-weight:600; line-height:1.6;
+    animation:fadeIn 0.3s ease;
+  }
+  .hint-box strong { color:var(--text); }
+  @keyframes fadeIn { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:none} }
+  .btn-reveal-hint {
+    padding:8px 20px; border-radius:50px;
+    border:1.5px dashed var(--border); background:transparent;
+    color:var(--sub); font-family:'Nunito',sans-serif;
+    font-size:0.85rem; font-weight:800; cursor:pointer; transition:all 0.18s;
+  }
+  .btn-reveal-hint:hover { border-color:var(--text); color:var(--text); }
+  .hard-msg {
+    text-align:center; padding:24px;
+    font-size:1rem; font-weight:700; color:var(--sub); line-height:1.7;
+  }
+  .hard-msg span { font-size:2.5rem; display:block; margin-bottom:8px; }
+  .no-hints-label {
+    font-size:0.82rem; color:var(--sub); font-weight:700;
+    text-align:center; padding:8px 0;
+  }
+
+  .hidden { display: none !important; }
+
   /* ── Tab nav ── */
   .tab-nav {
     position: relative; z-index: 1;
@@ -471,56 +622,7 @@
   .tab-btn.active { background: linear-gradient(135deg, var(--teal), var(--blue)); border-color: transparent; color: #0f0e17; }
   .tab-btn:hover:not(.active) { border-color: var(--blue); color: var(--text); }
 
-  /* ── Roadmap ── */
-  #roadmap { display: none; position: relative; z-index: 1; }
-  #roadmap.visible { display: block; }
-  .hidden { display: none !important; }
-
-  .roadmap-wrap { max-width: 860px; margin: 0 auto; padding: 0 16px 80px; }
-  .roadmap-intro { text-align: center; margin-bottom: 40px; }
-  .roadmap-intro p { color: var(--sub); font-size: 1rem; font-weight: 600; line-height: 1.7; max-width: 620px; margin: 0 auto; }
-
-  .phase { margin-bottom: 0; }
-  .phase-header { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; }
-  .phase-num {
-    width: 46px; height: 46px; border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-family: 'Fredoka One', sans-serif; font-size: 1.3rem;
-    color: #0f0e17; flex-shrink: 0;
-    box-shadow: 0 0 0 4px rgba(255,255,255,0.07);
-  }
-  .phase-title { font-family: 'Fredoka One', sans-serif; font-size: 1.35rem; color: var(--text); }
-  .phase-sub { font-size: 0.83rem; color: var(--sub); font-weight: 600; margin-top: 2px; }
-
-  .phase-skills { display: flex; flex-wrap: wrap; gap: 9px; padding-left: 60px; margin-bottom: 6px; }
-  .rskill {
-    display: flex; align-items: center; gap: 7px;
-    background: var(--card); border: 1.5px solid var(--border);
-    border-radius: 50px; padding: 7px 14px 7px 10px;
-    cursor: pointer; transition: all 0.18s;
-    font-size: 0.86rem; font-weight: 700; color: var(--text);
-  }
-  .rskill:hover { transform: translateY(-2px); border-color: var(--raccent); box-shadow: 0 4px 20px rgba(0,0,0,0.35); }
-  .rskill.learned { border-color: var(--amber); }
-  .rskill-icon { font-size: 1.05rem; line-height: 1; }
-  .rskill-star { font-size: 0.75rem; }
-
-  .phase-connector {
-    padding-left: 60px; margin: 2px 0 22px;
-    display: flex; align-items: stretch; gap: 0;
-  }
-  .connector-line {
-    width: 2px; min-height: 40px; border-radius: 2px;
-    background: linear-gradient(to bottom, var(--from), var(--to));
-    margin-left: 21px; margin-right: 14px; flex-shrink: 0;
-  }
-  .connector-text {
-    display: flex; align-items: center;
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: 20px; padding: 4px 14px;
-    font-size: 0.75rem; font-weight: 700; color: var(--sub);
-    align-self: center;
-  }
+  
 
 </style>
 </head>
@@ -582,29 +684,19 @@
 
 <div class="tab-nav">
   <button class="tab-btn active" id="tab-skills" onclick="switchTab('skills')">🃏 All Skills</button>
-  <button class="tab-btn" id="tab-roadmap" onclick="switchTab('roadmap')">🗺️ Learning Roadmap</button>
   <button class="tab-btn" id="tab-workflow" onclick="switchTab('workflow')">⚡ How It All Works</button>
 </div>
 
-<div id="skills-view">
+<div id="skills-view" style="position:relative;z-index:1;">
   <div class="filters" id="filters"></div>
   <div class="grid-wrap" id="grid"></div>
 </div>
 
-<div id="roadmap">
-  <div class="roadmap-wrap">
-    <div class="roadmap-intro">
-      <p>This is the order to learn these skills, like a treasure map! 🗺️ Each phase builds on the one before it. Click any skill pill to learn about it!</p>
-    </div>
-    <div id="roadmap-phases"></div>
-  </div>
-</div>
-
-<div id="workflow-view" style="display:none;position:relative;z-index:1;">
+<div id="workflow-view" style="position:relative;z-index:1;">
   <div class="wf-wrap">
 
     <div class="wf-intro">
-      <p>Ever wonder how a real app gets built  , from the first line of code to millions of users? Here's the full journey, step by step. 👇</p>
+      <p>Ever wonder how a real app gets built , from the first line of code to millions of users? Here's the full journey, step by step. 👇</p>
     </div>
 
     <!-- STEP 1: Frontend -->
@@ -620,16 +712,25 @@
           <div class="wf-card-head">
             <span class="wf-icon">🖥️</span>
             <div>
-              <div class="wf-title">Frontend  , What Users See</div>
+              <div class="wf-title">Frontend , What Users See</div>
               <div class="wf-subtitle">React · HTML · CSS · JavaScript</div>
             </div>
           </div>
-          <p class="wf-desc">This is the face of your app  , everything the user clicks, reads and interacts with. Built with <strong>React</strong>, it's like designing the inside of a shop: the layout, buttons, colours and menus. The frontend runs entirely in the user's browser.</p>
+          <p class="wf-desc">This is the face of your app , everything the user clicks, reads and interacts with. Built with <strong>React</strong>, it's like designing the inside of a shop: the layout, buttons, colours and menus. The frontend runs entirely in the user's browser.</p>
           <div class="wf-skills-row">
             <span class="wf-pill" style="--pc:#4fc3f7">⚛️ React</span>
             <span class="wf-pill" style="--pc:#4fc3f7">🖥️ React Dashboards</span>
+            <span class="wf-pill" style="--pc:#4fc3f7">💡 Power BI</span>
+            <span class="wf-pill" style="--pc:#4fc3f7">🎨 Tableau</span>
+            <span class="wf-pill" style="--pc:#4fc3f7">📈 Matplotlib</span>
+            <span class="wf-pill" style="--pc:#4fc3f7">📋 Excel</span>
           </div>
-          <div class="wf-callout">💡 Think of it as the shop window  , pretty, interactive, but it needs the warehouse (backend) to actually deliver the goods.</div>
+          <div class="wf-callout">💡 Think of it as the shop window , pretty, interactive, but it needs the warehouse (backend) to actually deliver the goods.</div>
+          <div class="wf-project-bar" style="--sc:#4fc3f7">
+            <div class="wf-project-label">🚀 Mini Project</div>
+            <button class="btn-see-example" style="--sc:#4fc3f7" onclick="openExample('frontend')">📖 See Example</button>
+            <button class="btn-your-turn" onclick="openYourTurn('frontend')">🛠️ Your Turn!</button>
+          </div>
         </div>
       </div>
     </div>
@@ -647,16 +748,21 @@
           <div class="wf-card-head">
             <span class="wf-icon">⚙️</span>
             <div>
-              <div class="wf-title">Backend  , The Brain</div>
+              <div class="wf-title">Backend , The Brain</div>
               <div class="wf-subtitle">Node.js · Express.js</div>
             </div>
           </div>
-          <p class="wf-desc">The backend is the engine room  , nobody sees it, but everything depends on it. Built with <strong>Node.js + Express.js</strong>, it handles the logic: who can log in, what data to fetch, what rules to apply. It sits between the frontend and the database.</p>
+          <p class="wf-desc">The backend is the engine room , nobody sees it, but everything depends on it. Built with <strong>Node.js + Express.js</strong>, it handles the logic: who can log in, what data to fetch, what rules to apply. It sits between the frontend and the database.</p>
           <div class="wf-skills-row">
             <span class="wf-pill" style="--pc:#ff69b4">🟢 Node.js</span>
             <span class="wf-pill" style="--pc:#ff69b4">🚂 Express.js</span>
           </div>
-          <div class="wf-callout">💡 Think of it as the kitchen of a restaurant  , customers (frontend) never enter, but every order goes through it.</div>
+          <div class="wf-callout">💡 Think of it as the kitchen of a restaurant , customers (frontend) never enter, but every order goes through it.</div>
+          <div class="wf-project-bar" style="--sc:#ff69b4">
+            <div class="wf-project-label">🚀 Mini Project</div>
+            <button class="btn-see-example" style="--sc:#ff69b4" onclick="openExample('backend')">📖 See Example</button>
+            <button class="btn-your-turn" onclick="openYourTurn('backend')">🛠️ Your Turn!</button>
+          </div>
         </div>
       </div>
     </div>
@@ -674,17 +780,22 @@
           <div class="wf-card-head">
             <span class="wf-icon">🗄️</span>
             <div>
-              <div class="wf-title">Database  , Where Data Lives</div>
+              <div class="wf-title">Database , Where Data Lives</div>
               <div class="wf-subtitle">PostgreSQL · MongoDB · SQL</div>
             </div>
           </div>
-          <p class="wf-desc">Every piece of data  , user accounts, orders, messages  , is stored in a <strong>database</strong>. The backend connects to it, reads from it and writes to it. <strong>PostgreSQL</strong> is great for structured data (like tables), <strong>MongoDB</strong> for flexible data.</p>
+          <p class="wf-desc">Every piece of data , user accounts, orders, messages , is stored in a <strong>database</strong>. The backend connects to it, reads from it and writes to it. <strong>PostgreSQL</strong> is great for structured data (like tables), <strong>MongoDB</strong> for flexible data.</p>
           <div class="wf-skills-row">
             <span class="wf-pill" style="--pc:#00e5a0">🐘 Aurora PostgreSQL</span>
             <span class="wf-pill" style="--pc:#00e5a0">🍃 MongoDB</span>
             <span class="wf-pill" style="--pc:#00e5a0">🗂️ SQL</span>
           </div>
-          <div class="wf-callout">💡 Think of it as a giant filing cabinet. The backend is the only one with a key  , the frontend never touches it directly.</div>
+          <div class="wf-callout">💡 Think of it as a giant filing cabinet. The backend is the only one with a key , the frontend never touches it directly.</div>
+          <div class="wf-project-bar" style="--sc:#00e5a0">
+            <div class="wf-project-label">🚀 Mini Project</div>
+            <button class="btn-see-example" style="--sc:#00e5a0" onclick="openExample('database')">📖 See Example</button>
+            <button class="btn-your-turn" onclick="openYourTurn('database')">🛠️ Your Turn!</button>
+          </div>
         </div>
       </div>
     </div>
@@ -702,16 +813,21 @@
           <div class="wf-card-head">
             <span class="wf-icon">🔌</span>
             <div>
-              <div class="wf-title">API  , The Translator</div>
+              <div class="wf-title">API , The Translator</div>
               <div class="wf-subtitle">REST API · IFTTT · MQTT</div>
             </div>
           </div>
-          <p class="wf-desc">The frontend and backend don't speak the same language, so they use an <strong>API</strong> (a set of rules) to talk to each other. The frontend sends a request ("give me user 42's profile") and the backend replies with the data  , like a waiter taking your order to the kitchen and bringing food back.</p>
+          <p class="wf-desc">The frontend and backend don't speak the same language, so they use an <strong>API</strong> (a set of rules) to talk to each other. The frontend sends a request ("give me user 42's profile") and the backend replies with the data , like a waiter taking your order to the kitchen and bringing food back.</p>
           <div class="wf-skills-row">
             <span class="wf-pill" style="--pc:#ff6b6b">🔀 IFTTT</span>
             <span class="wf-pill" style="--pc:#ff6b6b">📡 MQTT</span>
           </div>
           <div class="wf-callout">💡 API = Application Programming Interface. It's the menu that tells the frontend exactly what it can ask the backend for.</div>
+          <div class="wf-project-bar" style="--sc:#ff6b6b">
+            <div class="wf-project-label">🚀 Mini Project</div>
+            <button class="btn-see-example" style="--sc:#ff6b6b" onclick="openExample('api')">📖 See Example</button>
+            <button class="btn-your-turn" onclick="openYourTurn('api')">🛠️ Your Turn!</button>
+          </div>
         </div>
       </div>
     </div>
@@ -729,11 +845,11 @@
           <div class="wf-card-head">
             <span class="wf-icon">🌿</span>
             <div>
-              <div class="wf-title">Save Your Code  , Git & GitHub</div>
+              <div class="wf-title">Save Your Code , Git & GitHub</div>
               <div class="wf-subtitle">Git · GitHub · Branching · Pull Requests</div>
             </div>
           </div>
-          <p class="wf-desc">Before deploying anything, you save every version of your code using <strong>Git</strong>. It's like a magic undo button that remembers every change forever. <strong>GitHub</strong> is the online home for that code  , your whole team can collaborate, review and merge changes safely.</p>
+          <p class="wf-desc">Before deploying anything, you save every version of your code using <strong>Git</strong>. It's like a magic undo button that remembers every change forever. <strong>GitHub</strong> is the online home for that code , your whole team can collaborate, review and merge changes safely.</p>
           <div class="wf-skills-row">
             <span class="wf-pill" style="--pc:#ffca28">🌿 Git</span>
             <span class="wf-pill" style="--pc:#ffca28">🐙 GitHub / GitLab</span>
@@ -743,6 +859,11 @@
             <span class="wf-pill" style="--pc:#ffca28">🔒 gitignore & Secrets</span>
           </div>
           <div class="wf-callout">💡 No code goes live without being saved in Git first. It's the safety net for every developer on the planet.</div>
+          <div class="wf-project-bar" style="--sc:#ffca28">
+            <div class="wf-project-label">🚀 Mini Project</div>
+            <button class="btn-see-example" style="--sc:#ffca28" onclick="openExample('git')">📖 See Example</button>
+            <button class="btn-your-turn" onclick="openYourTurn('git')">🛠️ Your Turn!</button>
+          </div>
         </div>
       </div>
     </div>
@@ -760,17 +881,24 @@
           <div class="wf-card-head">
             <span class="wf-icon">🔄</span>
             <div>
-              <div class="wf-title">Automate Deployment  , CI/CD</div>
+              <div class="wf-title">Automate Deployment , CI/CD</div>
               <div class="wf-subtitle">GitHub Actions · Docker · CI/CD Pipelines</div>
             </div>
           </div>
-          <p class="wf-desc">Once code is pushed to GitHub, <strong>GitHub Actions</strong> automatically runs tests and checks. If everything passes, <strong>Docker</strong> packages the app into a sealed container (like packed lunch  , works the same everywhere) and the pipeline ships it to the server automatically. Zero manual steps.</p>
+          <p class="wf-desc">Once code is pushed to GitHub, <strong>GitHub Actions</strong> automatically runs tests and checks. If everything passes, <strong>Docker</strong> packages the app into a sealed container (like packed lunch , works the same everywhere) and the pipeline ships it to the server automatically. Zero manual steps.</p>
           <div class="wf-skills-row">
             <span class="wf-pill" style="--pc:#b388ff">⚙️ GitHub Actions</span>
             <span class="wf-pill" style="--pc:#b388ff">🐳 Docker</span>
             <span class="wf-pill" style="--pc:#b388ff">🔄 CI/CD</span>
+            <span class="wf-pill" style="--pc:#b388ff">📝 MLflow</span>
+            <span class="wf-pill" style="--pc:#b388ff">🚀 SageMaker Endpoints</span>
           </div>
-          <div class="wf-callout">💡 Think of CI/CD as an assembly line  , your code goes in one end, gets tested and packaged, and comes out the other end ready to serve users.</div>
+          <div class="wf-callout">💡 Think of CI/CD as an assembly line , your code goes in one end, gets tested and packaged, and comes out the other end ready to serve users.</div>
+          <div class="wf-project-bar" style="--sc:#b388ff">
+            <div class="wf-project-label">🚀 Mini Project</div>
+            <button class="btn-see-example" style="--sc:#b388ff" onclick="openExample('cicd')">📖 See Example</button>
+            <button class="btn-your-turn" onclick="openYourTurn('cicd')">🛠️ Your Turn!</button>
+          </div>
         </div>
       </div>
     </div>
@@ -788,17 +916,25 @@
           <div class="wf-card-head">
             <span class="wf-icon">☁️</span>
             <div>
-              <div class="wf-title">Host It  , AWS EC2</div>
+              <div class="wf-title">Host It , AWS EC2</div>
               <div class="wf-subtitle">EC2 · S3 · Lambda · AWS</div>
             </div>
           </div>
-          <p class="wf-desc">Your app needs a computer that's switched on 24/7. That's <strong>EC2</strong>  , a virtual computer you rent from Amazon that lives in their data centre. It never sleeps. Users from anywhere in the world can reach your app because EC2 is always on, always connected to the internet.</p>
+          <p class="wf-desc">Your app needs a computer that's switched on 24/7. That's <strong>EC2</strong> , a virtual computer you rent from Amazon that lives in their data centre. It never sleeps. Users from anywhere in the world can reach your app because EC2 is always on, always connected to the internet.</p>
           <div class="wf-skills-row">
             <span class="wf-pill" style="--pc:#4fc3f7">💻 EC2</span>
             <span class="wf-pill" style="--pc:#4fc3f7">🪣 S3</span>
             <span class="wf-pill" style="--pc:#4fc3f7">⚡ Lambda</span>
+            <span class="wf-pill" style="--pc:#4fc3f7">🔗 Glue</span>
+            <span class="wf-pill" style="--pc:#4fc3f7">🌊 Kinesis</span>
+            <span class="wf-pill" style="--pc:#4fc3f7">🔥 Apache Spark</span>
           </div>
-          <div class="wf-callout">💡 EC2 is a virtual computer in Amazon's building. You pay only for what you use  , and you can make it bigger or smaller in seconds.</div>
+          <div class="wf-callout">💡 EC2 is a virtual computer in Amazon's building. You pay only for what you use , and you can make it bigger or smaller in seconds.</div>
+          <div class="wf-project-bar" style="--sc:#4fc3f7">
+            <div class="wf-project-label">🚀 Mini Project</div>
+            <button class="btn-see-example" style="--sc:#4fc3f7" onclick="openExample('ec2')">📖 See Example</button>
+            <button class="btn-your-turn" onclick="openYourTurn('ec2')">🛠️ Your Turn!</button>
+          </div>
         </div>
       </div>
     </div>
@@ -820,17 +956,35 @@
               <div class="wf-subtitle">Pandas · ML · SageMaker · RAG · LLMs</div>
             </div>
           </div>
-          <p class="wf-desc">Only now  , once users are using the app and real data is flowing into the database  , does the <strong>data scientist</strong> enter the picture. They extract that data, clean it with <strong>Pandas</strong>, find patterns with <strong>ML models</strong>, build predictions, and feed insights back into the app. The loop is complete.</p>
+          <p class="wf-desc">Only now , once users are using the app and real data is flowing into the database , does the <strong>data scientist</strong> enter the picture. They extract that data, clean it with <strong>Pandas</strong>, find patterns with <strong>ML models</strong>, build predictions, and feed insights back into the app. The loop is complete.</p>
           <div class="wf-skills-row">
             <span class="wf-pill" style="--pc:#69f0ae">🐼 Pandas</span>
             <span class="wf-pill" style="--pc:#69f0ae">🔢 NumPy</span>
+            <span class="wf-pill" style="--pc:#69f0ae">📈 Matplotlib</span>
             <span class="wf-pill" style="--pc:#69f0ae">🤖 Scikit-learn</span>
             <span class="wf-pill" style="--pc:#69f0ae">🧠 TensorFlow</span>
+            <span class="wf-pill" style="--pc:#69f0ae">🔥 PyTorch</span>
+            <span class="wf-pill" style="--pc:#69f0ae">🤗 Hugging Face</span>
+            <span class="wf-pill" style="--pc:#69f0ae">✨ AutoML</span>
             <span class="wf-pill" style="--pc:#69f0ae">🏋️ SageMaker</span>
             <span class="wf-pill" style="--pc:#69f0ae">📚 RAG</span>
-            <span class="wf-pill" style="--pc:#69f0ae">✨ LLMs</span>
+            <span class="wf-pill" style="--pc:#69f0ae">💬 Prompt Engineering</span>
+            <span class="wf-pill" style="--pc:#69f0ae">⛓️ LangChain</span>
+            <span class="wf-pill" style="--pc:#69f0ae">🦙 LlamaIndex</span>
+            <span class="wf-pill" style="--pc:#69f0ae">🎲 Probability & Statistics</span>
+            <span class="wf-pill" style="--pc:#69f0ae">🧫 Hypothesis Testing</span>
+            <span class="wf-pill" style="--pc:#69f0ae">🧪 A/B Testing</span>
+            <span class="wf-pill" style="--pc:#69f0ae">🔧 Feature Engineering</span>
+            <span class="wf-pill" style="--pc:#69f0ae">📐 Model Evaluation</span>
+            <span class="wf-pill" style="--pc:#69f0ae">🔍 SHAP</span>
+            <span class="wf-pill" style="--pc:#69f0ae">🍋 LIME</span>
           </div>
-          <div class="wf-callout">🎉 This is the payoff! Real users generate real data, and the data scientist turns that into intelligence  , recommendations, predictions, insights  , that make the app smarter over time.</div>
+          <div class="wf-callout">🎉 This is the payoff! Real users generate real data, and the data scientist turns that into intelligence , recommendations, predictions, insights , that make the app smarter over time.</div>
+          <div class="wf-project-bar" style="--sc:#69f0ae">
+            <div class="wf-project-label">🚀 Mini Project</div>
+            <button class="btn-see-example" style="--sc:#69f0ae" onclick="openExample('datascience')">📖 See Example</button>
+            <button class="btn-your-turn" onclick="openYourTurn('datascience')">🛠️ Your Turn!</button>
+          </div>
         </div>
       </div>
     </div>
@@ -1256,169 +1410,454 @@ function confetti(el){
 }
 
 
-// ── Roadmap data ──────────────────────────────────────────────────────────────
-const ROADMAP = [
-  {
-    phase: 1, title: "The Foundation", emoji: "🏗️", color: "#00e5a0",
-    sub: "Before anything else, learn to store, retrieve and organise data",
-    skills: ["Git","GitHub / GitLab","Branching & Merging","Pull Requests","Code Review","GitHub Actions","gitignore & Secrets"],
-    connector: "Once your code is safe and tracked, learn where data lives →",
-    connTo: "#1D9E75"
-  },
-  {
-    phase: 2, title: "Data Storage", emoji: "🗄️", color: "#1D9E75",
-    sub: "Understand where data lives before you can work with it",
-    skills: ["SQL","Aurora PostgreSQL","MongoDB","S3"],
-    connector: "Now pull that data in and start exploring it →",
-    connTo: "#4fc3f7"
-  },
-  {
-    phase: 3, title: "Data Wrangling & Exploration", emoji: "🔬", color: "#4fc3f7",
-    sub: "Clean, explore and understand your data using Python",
-    skills: ["Python (NumPy)","Pandas","Matplotlib","Excel"],
-    connector: "Once data is clean, apply maths to understand it deeper →",
-    connTo: "#b388ff"
-  },
-  {
-    phase: 4, title: "Statistics & Mathematics", emoji: "📐", color: "#b388ff",
-    sub: "The maths brain behind every good data decision",
-    skills: ["Probability & Statistics","Hypothesis Testing","A/B Testing","Feature Engineering","Model Evaluation"],
-    connector: "Apply this maths to build your first learning models →",
-    connTo: "#ff6b6b"
-  },
-  {
-    phase: 5, title: "Machine Learning", emoji: "🤖", color: "#ff6b6b",
-    sub: "Teach computers to spot patterns and make predictions",
-    skills: ["Scikit-learn","TensorFlow","PyTorch","Hugging Face","AutoML","SHAP","LIME"],
-    connector: "Scale your ML work to massive datasets →",
-    connTo: "#69f0ae"
-  },
-  {
-    phase: 6, title: "Big Data & Pipelines", emoji: "🌊", color: "#69f0ae",
-    sub: "Process data too big for one machine",
-    skills: ["Apache Spark","Kinesis","Glue"],
-    connector: "Move your work to the cloud for scale and reliability →",
-    connTo: "#ffca28"
-  },
-  {
-    phase: 7, title: "Cloud Infrastructure (AWS)", emoji: "☁️", color: "#ffca28",
-    sub: "Run everything on the internet, reliably and at scale",
-    skills: ["EC2","Lambda","S3","SageMaker"],
-    connector: "Package and deploy your models professionally →",
-    connTo: "#f48fb1"
-  },
-  {
-    phase: 8, title: "MLOps & Deployment", emoji: "🚢", color: "#f48fb1",
-    sub: "Ship ML models to the real world and keep them healthy",
-    skills: ["Docker","MLflow","CI/CD","SageMaker Endpoints"],
-    connector: "Build the backend systems that serve your ML outputs →",
-    connTo: "#ff6b6b"
-  },
-  {
-    phase: 9, title: "Backend & APIs", emoji: "⚙️", color: "#ff6b6b",
-    sub: "Create the server logic and connections between systems",
-    skills: ["Node.js","Express.js","IFTTT","MQTT"],
-    connector: "Show the results beautifully on screen →",
-    connTo: "#4fc3f7"
-  },
-  {
-    phase: 10, title: "Visualisation & Frontend", emoji: "🎨", color: "#4fc3f7",
-    sub: "Make data visible, beautiful and interactive for users",
-    skills: ["React","Power BI","Tableau","React Dashboards"],
-    connector: "Finally, supercharge everything with Generative AI →",
-    connTo: "#b388ff"
-  },
-  {
-    phase: 11, title: "Generative AI & LLMs", emoji: "✨", color: "#b388ff",
-    sub: "The cutting edge, build AI-powered products and assistants",
-    skills: ["Prompt Engineering","RAG","LangChain","LlamaIndex"],
-    connector: null
-  },
-];
 
-// Map skill name aliases (roadmap uses display names that might differ slightly)
-const SKILL_ALIAS = { "Python (NumPy)": "NumPy" };
+// ── Mini Project Data ─────────────────────────────────────────────────────────
+const PROJECTS = {
+  frontend: {
+    color: '#4fc3f7',
+    example: {
+      title: '🖥️ Click Counter App',
+      lang: 'jsx',
+      what: '<strong>What this does:</strong> A React component with a button. Every time you click it, a number goes up. It uses <strong>useState</strong> , React\'s way of remembering values that change.',
+      code: `<span class="hl-kw">import</span> { useState } <span class="hl-kw">from</span> <span class="hl-str">"react"</span>;
 
-function skillByName(name) {
-  const lookup = SKILL_ALIAS[name] || name;
-  return SKILLS.find(s => s.name === lookup);
+<span class="hl-kw">function</span> <span class="hl-fn">Counter</span>() {
+  <span class="hl-cm">// useState(0) = start counting from 0</span>
+  <span class="hl-kw">const</span> [count, setCount] = useState(<span class="hl-num">0</span>);
+
+  <span class="hl-kw">return</span> (
+    <span class="hl-tag">&lt;div&gt;</span>
+      <span class="hl-tag">&lt;h2&gt;</span>You clicked <span class="hl-tag">&lt;strong&gt;</span>{count}<span class="hl-tag">&lt;/strong&gt;</span> times!<span class="hl-tag">&lt;/h2&gt;</span>
+      <span class="hl-tag">&lt;button</span> <span class="hl-attr">onClick</span>={() =&gt; setCount(count + <span class="hl-num">1</span>)}<span class="hl-tag">&gt;</span>
+        Click me! 🎉
+      <span class="hl-tag">&lt;/button&gt;</span>
+    <span class="hl-tag">&lt;/div&gt;</span>
+  );
 }
 
-function buildRoadmap() {
-  const container = document.getElementById('roadmap-phases');
-  container.innerHTML = '';
-
-  ROADMAP.forEach((phase, pi) => {
-    const phaseEl = document.createElement('div');
-    phaseEl.className = 'phase';
-
-    // header
-    phaseEl.innerHTML = `
-      <div class="phase-header">
-        <div class="phase-num" style="background:${phase.color}">${phase.emoji}</div>
-        <div>
-          <div class="phase-title">Phase ${phase.phase}, ${phase.title}</div>
-          <div class="phase-sub">${phase.sub}</div>
-        </div>
-      </div>
-      <div class="phase-skills" id="rphase-${pi}"></div>
-    `;
-
-    container.appendChild(phaseEl);
-
-    // skill pills
-    const pillsEl = phaseEl.querySelector('.phase-skills');
-    phase.skills.forEach(sname => {
-      const skill = skillByName(sname);
-      if (!skill) return;
-      const idx = SKILLS.indexOf(skill);
-      const accent = CATS[skill.cat]?.color || '#888';
-      const pill = document.createElement('div');
-      pill.className = 'rskill' + (learned.has(skill.name) ? ' learned' : '');
-      pill.style.setProperty('--raccent', accent);
-      pill.innerHTML = `<span class="rskill-icon">${skill.icon}</span><span class="rskill-name">${sname}</span>${learned.has(skill.name)?'<span class="rskill-star">⭐</span>':''}`;
-      pill.onclick = () => openModal(idx);
-      pillsEl.appendChild(pill);
-    });
-
-    // connector
-    if (phase.connector) {
-      const conn = document.createElement('div');
-      conn.className = 'phase-connector';
-      conn.innerHTML = `
-        <div class="connector-line" style="--from:${phase.color};--to:${phase.connTo}"></div>
-        <div class="connector-text">${phase.connector}</div>
-      `;
-      container.appendChild(conn);
+<span class="hl-kw">export default</span> Counter;`,
+      ref: 'https://react.dev/learn'
+    },
+    yourTurn: {
+      easy:   { problem: `🟢 Build a shopping list app. Type an item into a text box, click "Add", and it appears in a list. Each item has a ❌ remove button. Use useState for the list array and the input text.` },
+      medium: { problem: `🟡 Build a shopping list app with categories. Each item should have a name AND a category (Food, Tech, Other). Show items grouped by category. Add a "Clear all" button.` },
+      hard:   { problem: `🔴 Build a full shopping list app with: add/remove items, mark items as bought (strikethrough), filter by status (All / Pending / Bought), drag-to-reorder, and persist the list in localStorage.` },
+      hints: [
+        `💡 <strong>Step 1:</strong> Create a useState for the list (an array) and another useState for what the user is typing.`,
+        `💡 <strong>Step 2:</strong> Use an &lt;input&gt; with onChange to update your text state as the user types.`,
+        `💡 <strong>Step 3:</strong> On "Add" click, use setList([...list, newItem]) to add the item. Use .filter() to remove one.`
+      ]
     }
+  },
+  backend: {
+    color: '#ff69b4',
+    example: {
+      title: '⚙️ Simple Express API',
+      lang: 'javascript',
+      what: '<strong>What this does:</strong> Creates a tiny web server using Express.js. When someone visits <code>/hello</code>, it replies with a JSON message.',
+      code: `<span class="hl-kw">const</span> express = <span class="hl-fn">require</span>(<span class="hl-str">"express"</span>);
+<span class="hl-kw">const</span> app = <span class="hl-fn">express</span>();
+
+<span class="hl-cm">// When someone visits /hello, send back a message</span>
+app.<span class="hl-fn">get</span>(<span class="hl-str">"/hello"</span>, (req, res) =&gt; {
+  res.<span class="hl-fn">json</span>({ message: <span class="hl-str">"Hello, World! 👋"</span> });
+});
+
+<span class="hl-cm">// Start server on port 3000</span>
+app.<span class="hl-fn">listen</span>(<span class="hl-num">3000</span>, () =&gt; {
+  console.<span class="hl-fn">log</span>(<span class="hl-str">"Server running on port 3000 🚀"</span>);
+});`,
+      ref: 'https://expressjs.com/en/starter/hello-world.html'
+    },
+    yourTurn: {
+      easy:   { problem: `🟢 Build an Express server with GET /users returning 3 fake users (id, name, age), and GET /users/:id returning one user. Return 404 if the id doesn't exist.` },
+      medium: { problem: `🟡 Build an Express API for a todo list: GET /todos (return all), POST /todos (add one), DELETE /todos/:id (remove one). Store todos in memory as an array.` },
+      hard:   { problem: `🔴 Build a fully RESTful Express API for a blog: CRUD for /posts and /posts/:id. Add input validation (title must not be empty), error handling middleware, and a search endpoint GET /posts?q=keyword.` },
+      hints: [
+        `💡 <strong>Step 1:</strong> Create a const users = [] array at the top with 3 user objects each having id, name, and age.`,
+        `💡 <strong>Step 2:</strong> For /users/:id, use req.params.id to get the id from the URL, then use users.find() to look it up.`,
+        `💡 <strong>Step 3:</strong> If .find() returns undefined, use res.status(404).json({ error: "Not found" }) to send the error.`
+      ]
+    }
+  },
+  database: {
+    color: '#00e5a0',
+    example: {
+      title: '🗄️ Create & Query a Table',
+      lang: 'sql',
+      what: '<strong>What this does:</strong> Creates a simple users table in SQL, adds 2 rows of data, then queries the table to find users over 18.',
+      code: `<span class="hl-cm">-- Create a table called users</span>
+<span class="hl-kw">CREATE TABLE</span> users (
+  id    <span class="hl-kw">SERIAL PRIMARY KEY</span>,
+  name  <span class="hl-kw">VARCHAR</span>(<span class="hl-num">100</span>),
+  age   <span class="hl-kw">INTEGER</span>
+);
+
+<span class="hl-cm">-- Add some data</span>
+<span class="hl-kw">INSERT INTO</span> users (name, age)
+<span class="hl-kw">VALUES</span>
+  (<span class="hl-str">'Alice'</span>, <span class="hl-num">25</span>),
+  (<span class="hl-str">'Bob'</span>, <span class="hl-num">17</span>),
+  (<span class="hl-str">'Carol'</span>, <span class="hl-num">32</span>);
+
+<span class="hl-cm">-- Find users who are 18 or older</span>
+<span class="hl-kw">SELECT</span> name, age
+<span class="hl-kw">FROM</span>   users
+<span class="hl-kw">WHERE</span>  age &gt;= <span class="hl-num">18</span>
+<span class="hl-kw">ORDER BY</span> age <span class="hl-kw">ASC</span>;`,
+      ref: 'https://sqlzoo.net/'
+    },
+    yourTurn: {
+      easy:   { problem: `🟢 Create a books table (id, title, author, year_published, is_available). Insert 5 books. Write 3 queries: all available books, books after 2000, count books per author.` },
+      medium: { problem: `🟡 Design a database for a school: tables for students, courses, and enrolments (linking both). Write queries to find all students in a specific course, and all courses a specific student is enrolled in.` },
+      hard:   { problem: `🔴 Design a full e-commerce database: users, products, orders, order_items. Write queries for: top 5 best-selling products, total revenue per month, users who have never placed an order, and average order value.` },
+      hints: [
+        `💡 <strong>Step 1:</strong> Use BOOLEAN for is_available. Use INTEGER for year_published. Use SERIAL PRIMARY KEY for id.`,
+        `💡 <strong>Step 2:</strong> For counting per author: SELECT author, COUNT(*) FROM books GROUP BY author.`,
+        `💡 <strong>Step 3:</strong> Combine conditions with AND: WHERE is_available = true AND year_published &gt; 2000.`
+      ]
+    }
+  },
+  api: {
+    color: '#ff6b6b',
+    example: {
+      title: '🔌 Frontend Fetching from Backend',
+      lang: 'javascript',
+      what: '<strong>What this does:</strong> Shows how React talks to Express using the Fetch API. The frontend sends a GET request, the backend replies, React displays it.',
+      code: `<span class="hl-cm">// ---- BACKEND (Express) ----</span>
+app.<span class="hl-fn">get</span>(<span class="hl-str">"/api/message"</span>, (req, res) =&gt; {
+  res.<span class="hl-fn">json</span>({ text: <span class="hl-str">"Hello from the backend! 👋"</span> });
+});
+
+<span class="hl-cm">// ---- FRONTEND (React) ----</span>
+<span class="hl-kw">import</span> { useState, useEffect } <span class="hl-kw">from</span> <span class="hl-str">"react"</span>;
+
+<span class="hl-kw">function</span> <span class="hl-fn">App</span>() {
+  <span class="hl-kw">const</span> [msg, setMsg] = <span class="hl-fn">useState</span>(<span class="hl-str">""</span>);
+
+  <span class="hl-fn">useEffect</span>(() =&gt; {
+    <span class="hl-cm">// Ask the backend for data when page loads</span>
+    <span class="hl-fn">fetch</span>(<span class="hl-str">"/api/message"</span>)
+      .<span class="hl-fn">then</span>(res =&gt; res.<span class="hl-fn">json</span>())
+      .<span class="hl-fn">then</span>(data =&gt; <span class="hl-fn">setMsg</span>(data.text));
+  }, []);
+
+  <span class="hl-kw">return</span> <span class="hl-tag">&lt;h1&gt;</span>{msg}<span class="hl-tag">&lt;/h1&gt;</span>;
+}`,
+      ref: 'https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch'
+    },
+    yourTurn: {
+      easy:   { problem: `🟢 Connect React to Express: a POST /api/greet route accepts { name } and returns "Hello, [name]! Welcome aboard 🎉". The frontend has a text input , on submit it calls the API and shows the greeting.` },
+      medium: { problem: `🟡 Build a React weather-lookup app: user types a city, React calls your Express backend at GET /api/weather/:city, backend fetches from OpenWeatherMap API and returns temp + description. Display it nicely.` },
+      hard:   { problem: `🔴 Build a full notes app: React frontend with a list of notes. Backend Express API: GET/POST/PUT/DELETE /api/notes. Add JWT authentication , only logged-in users can create or delete notes. Store notes in memory.` },
+      hints: [
+        `💡 <strong>Step 1:</strong> In Express use app.use(express.json()) to parse request bodies, then read the name with req.body.name.`,
+        `💡 <strong>Step 2:</strong> In React, use fetch("/api/greet", { method: "POST", headers: {"Content-Type":"application/json"}, body: JSON.stringify({name}) }).`,
+        `💡 <strong>Step 3:</strong> Chain .then(res =&gt; res.json()).then(data =&gt; setGreeting(data.message)) to get and display the reply.`
+      ]
+    }
+  },
+  git: {
+    color: '#ffca28',
+    example: {
+      title: '🌿 Your First Git Workflow',
+      lang: 'bash',
+      what: '<strong>What this does:</strong> The exact commands to start tracking a project with Git and push it to GitHub for the first time.',
+      code: `<span class="hl-cm"># 1. Turn your folder into a Git project</span>
+git init
+
+<span class="hl-cm"># 2. Tell Git which files to save</span>
+git add .
+
+<span class="hl-cm"># 3. Save a snapshot with a message</span>
+git commit -m <span class="hl-str">"first commit 🚀"</span>
+
+<span class="hl-cm"># 4. Connect to your GitHub repo</span>
+git remote add origin https://github.com/you/your-repo.git
+
+<span class="hl-cm"># 5. Push your code to GitHub</span>
+git push -u origin main
+
+<span class="hl-cm"># Later , save new changes</span>
+git add .
+git commit -m <span class="hl-str">"added login page"</span>
+git push`,
+      ref: 'https://docs.github.com/en/get-started/quickstart/hello-world'
+    },
+    yourTurn: {
+      easy:   { problem: `🟢 Create a "my-portfolio" folder with index.html (your name + bio). Init a Git repo, commit, push to a new GitHub repo. Then add a favourite quote, commit with a meaningful message, and push again.` },
+      medium: { problem: `🟡 Work with branches: on your portfolio repo, create a branch called "feature/dark-mode", add a dark background CSS style, commit it, push the branch, open a Pull Request on GitHub, then merge it into main.` },
+      hard:   { problem: `🔴 Simulate a team workflow: create two branches , "feature/about-page" and "feature/contact-page". Make conflicting changes to the same line in index.html on both branches. Merge one into main, then merge the other and resolve the merge conflict manually.` },
+      hints: [
+        `💡 <strong>Step 1:</strong> mkdir my-portfolio → cd my-portfolio → create index.html → git init → git add . → git commit -m "initial commit"`,
+        `💡 <strong>Step 2:</strong> Go to github.com, click New Repository, give it a name, do NOT initialise with README, copy the remote URL.`,
+        `💡 <strong>Step 3:</strong> git remote add origin [your-url] → git push -u origin main. Then edit the file, git add . → git commit -m "add quote" → git push.`
+      ]
+    }
+  },
+  cicd: {
+    color: '#b388ff',
+    example: {
+      title: '🔄 GitHub Actions Workflow',
+      lang: 'yaml',
+      what: '<strong>What this does:</strong> A GitHub Actions file that runs your tests automatically every time you push code. Green tick ✅ = pass. Red cross ❌ = fail.',
+      code: `<span class="hl-cm"># .github/workflows/test.yml</span>
+<span class="hl-attr">name</span>: <span class="hl-str">Run Tests</span>
+
+<span class="hl-attr">on</span>:
+  <span class="hl-attr">push</span>:
+    <span class="hl-attr">branches</span>: [<span class="hl-str">main</span>]
+
+<span class="hl-attr">jobs</span>:
+  <span class="hl-attr">test</span>:
+    <span class="hl-attr">runs-on</span>: <span class="hl-str">ubuntu-latest</span>
+    <span class="hl-attr">steps</span>:
+      - <span class="hl-attr">uses</span>: <span class="hl-str">actions/checkout@v3</span>
+      - <span class="hl-attr">uses</span>: <span class="hl-str">actions/setup-node@v3</span>
+        <span class="hl-attr">with</span>:
+          <span class="hl-attr">node-version</span>: <span class="hl-str">"18"</span>
+      - <span class="hl-attr">run</span>: <span class="hl-str">npm install</span>
+      - <span class="hl-attr">run</span>: <span class="hl-str">npm test</span>`,
+      ref: 'https://docs.github.com/en/actions/quickstart'
+    },
+    yourTurn: {
+      easy:   { problem: `🟢 Create a Node.js project with an add(a, b) function. Write a Jest test for it. Create a GitHub Actions workflow that runs tests on every push to main. Break it on purpose to see the red ❌.` },
+      medium: { problem: `🟡 Add a Docker step to your CI pipeline: after tests pass, build a Docker image of your Node.js app and push it to Docker Hub automatically using GitHub Actions secrets for credentials.` },
+      hard:   { problem: `🔴 Build a full CI/CD pipeline: on push to main , run tests, build Docker image, push to Docker Hub, then SSH into an EC2 instance and pull + restart the new container automatically. Zero manual steps.` },
+      hints: [
+        `💡 <strong>Step 1:</strong> npm init -y → npm install --save-dev jest → create add.js with module.exports = {add} → create add.test.js with test("adds", () =&gt; expect(add(2,3)).toBe(5))`,
+        `💡 <strong>Step 2:</strong> In package.json set "scripts": { "test": "jest" }. Create .github/workflows/test.yml and copy the example above.`,
+        `💡 <strong>Step 3:</strong> Push to GitHub, go to the Actions tab , you will see the workflow running live! Change add to return a - b and push again to see it fail.`
+      ]
+    }
+  },
+  ec2: {
+    color: '#4fc3f7',
+    example: {
+      title: '☁️ Launch & Connect to EC2',
+      lang: 'bash',
+      what: '<strong>What this does:</strong> The steps to launch your first EC2 instance on AWS and deploy a simple web server that the whole internet can access.',
+      code: `<span class="hl-cm"># On AWS Console: launch Ubuntu EC2, download key.pem</span>
+<span class="hl-cm"># Then in your terminal:</span>
+
+<span class="hl-cm"># 1. Fix key permissions</span>
+chmod <span class="hl-num">400</span> key.pem
+
+<span class="hl-cm"># 2. SSH into your cloud computer</span>
+ssh -i key.pem ubuntu@YOUR_EC2_PUBLIC_IP
+
+<span class="hl-cm"># 3. Update and install Node</span>
+sudo apt update
+sudo apt install -y nodejs npm
+
+<span class="hl-cm"># 4. Create a simple server file</span>
+nano server.js
+
+<span class="hl-cm"># 5. Run it!</span>
+node server.js
+<span class="hl-cm"># Visit http://YOUR_EC2_IP:3000 in your browser 🎉</span>`,
+      ref: 'https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EC2_GetStarted.html'
+    },
+    yourTurn: {
+      easy:   { problem: `🟢 Launch a free-tier EC2 (t2.micro, Ubuntu). SSH in, install Node.js, deploy an Express server with GET / and GET /time routes. Open port 3000 in the Security Group and visit both routes in your browser.` },
+      medium: { problem: `🟡 Deploy your portfolio (index.html + Express server) to EC2. Set up Nginx as a reverse proxy so your app runs on port 80 (no port number needed in the URL). Use pm2 to keep it running after you close the terminal.` },
+      hard:   { problem: `🔴 Deploy a full Node.js + MongoDB app to EC2. Install MongoDB on the instance, connect your Express API to it, set up Nginx, secure it with an SSL certificate (Let's Encrypt/Certbot), and point a real domain name at the instance.` },
+      hints: [
+        `💡 <strong>Step 1:</strong> In AWS Console → EC2 → Launch Instance → Ubuntu → t2.micro → Create new key pair → In Security Group add inbound rule: Custom TCP port 3000 from 0.0.0.0/0.`,
+        `💡 <strong>Step 2:</strong> SSH in, run: sudo apt update && sudo apt install -y nodejs npm → mkdir app → cd app → npm init -y → npm install express → create server.js.`,
+        `💡 <strong>Step 3:</strong> For the /time route use res.json({ time: new Date().toISOString() }). Run with node server.js then visit http://[your-ip]:3000 in your browser.`
+      ]
+    }
+  },
+  datascience: {
+    color: '#69f0ae',
+    example: {
+      title: '🔬 Explore Real Data with Pandas',
+      lang: 'python',
+      what: '<strong>What this does:</strong> Loads a dataset, cleans it, asks basic questions, and visualises the answer , the exact workflow a data scientist runs on day one.',
+      code: `<span class="hl-kw">import</span> pandas <span class="hl-kw">as</span> pd
+<span class="hl-kw">import</span> matplotlib.pyplot <span class="hl-kw">as</span> plt
+
+<span class="hl-cm"># Load a CSV of sales data</span>
+df = pd.<span class="hl-fn">read_csv</span>(<span class="hl-str">"sales.csv"</span>)
+
+<span class="hl-cm"># Peek at the first 5 rows</span>
+<span class="hl-fn">print</span>(df.<span class="hl-fn">head</span>())
+
+<span class="hl-cm"># Check for missing values</span>
+<span class="hl-fn">print</span>(df.<span class="hl-fn">isnull</span>().<span class="hl-fn">sum</span>())
+
+<span class="hl-cm"># Which product sold the most?</span>
+top = df.<span class="hl-fn">groupby</span>(<span class="hl-str">"product"</span>)[<span class="hl-str">"quantity"</span>].<span class="hl-fn">sum</span>()
+<span class="hl-fn">print</span>(top.<span class="hl-fn">sort_values</span>(ascending=<span class="hl-kw">False</span>).<span class="hl-fn">head</span>(<span class="hl-num">5</span>))
+
+<span class="hl-cm"># Plot it</span>
+top.<span class="hl-fn">sort_values</span>().<span class="hl-fn">plot</span>(kind=<span class="hl-str">"barh"</span>, color=<span class="hl-str">"#ff69b4"</span>)
+plt.<span class="hl-fn">title</span>(<span class="hl-str">"Sales by Product"</span>)
+plt.<span class="hl-fn">tight_layout</span>()
+plt.<span class="hl-fn">show</span>()`,
+      ref: 'https://www.kaggle.com/learn/pandas'
+    },
+    yourTurn: {
+      easy:   { problem: `🟢 Download the Titanic dataset from Kaggle. Answer 4 questions: (1) What % survived? (2) More men or women survived? (3) Average age of survivors vs non-survivors? (4) Which class had the highest survival rate? Plot a bar chart for Q4.` },
+      medium: { problem: `🟡 Using the Titanic dataset, train a Logistic Regression model (Scikit-learn) to predict survival. Use features: Pclass, Sex, Age, SibSp, Fare. Handle missing values, encode categorical columns, split train/test 80/20, and report accuracy + F1 score.` },
+      hard:   { problem: `🔴 Build a full ML pipeline on the Titanic dataset: compare Logistic Regression, Random Forest, and XGBoost. Use cross-validation, tune hyperparameters with GridSearchCV, plot a ROC curve for each model, use SHAP to explain the best model's predictions, and write a short summary of findings.` },
+      hints: [
+        `💡 <strong>Step 1:</strong> df["Survived"].mean() * 100 gives survival %. Use df.groupby("Sex")["Survived"].mean() for Q2.`,
+        `💡 <strong>Step 2:</strong> df.groupby("Survived")["Age"].mean() for Q3. Use df.groupby("Pclass")["Survived"].mean() for Q4.`,
+        `💡 <strong>Step 3:</strong> For the chart: survival_by_class.plot(kind="bar") then plt.ylabel("Survival Rate") and plt.show().`
+      ]
+    }
+  }
+};
+
+// ── Project Modal Logic ───────────────────────────────────────────────────────
+let currentDifficulty = 'easy';
+let hintsRevealed = 0;
+let currentProjectKey = null;
+
+function openExample(key) {
+  const p = PROJECTS[key];
+  if (!p) return;
+  currentProjectKey = key;
+  const overlay = document.getElementById('proj-overlay');
+  const modal = document.getElementById('proj-modal');
+  modal.style.setProperty('--pm-color', p.color);
+  overlay.style.setProperty('--pm-color', p.color);
+
+  document.getElementById('proj-modal-inner').innerHTML = `
+    <div class="proj-modal-title">${p.example.title}</div>
+    <div class="proj-modal-sub">📖 Sample Project , Study This First</div>
+    <div class="proj-what">${p.example.what}</div>
+    <div class="code-wrap">
+      <div class="code-topbar">
+        <span class="code-lang">${p.example.lang}</span>
+        <button class="code-copy" onclick="copyCode(this)">📋 Copy</button>
+      </div>
+      <pre>${p.example.code}</pre>
+    </div>
+    <a href="${p.example.ref}" target="_blank" style="display:inline-flex;align-items:center;gap:6px;
+      color:var(--pm-color);font-weight:800;font-size:0.88rem;text-decoration:none;margin-top:8px;">
+      📚 Official Docs / Tutorial →
+    </a>
+  `;
+  overlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function openYourTurn(key) {
+  const p = PROJECTS[key];
+  if (!p) return;
+  currentProjectKey = key;
+  hintsRevealed = 0;
+  currentDifficulty = 'easy';
+  const overlay = document.getElementById('proj-overlay');
+  const modal = document.getElementById('proj-modal');
+  modal.style.setProperty('--pm-color', p.color);
+  overlay.style.setProperty('--pm-color', p.color);
+  renderYourTurn(key);
+  overlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function renderYourTurn(key) {
+  const p = PROJECTS[key];
+  const problemText = p.yourTurn[currentDifficulty]?.problem || p.yourTurn.easy.problem;
+  document.getElementById('proj-modal-inner').innerHTML = `
+    <div class="proj-modal-title">🛠️ Your Turn!</div>
+    <div class="proj-modal-sub">Build this yourself , no copy-pasting!</div>
+    <div class="yt-problem">${problemText}</div>
+    <div style="margin-bottom:10px;font-size:0.82rem;font-weight:800;color:var(--sub);text-transform:uppercase;letter-spacing:0.07em;">Choose difficulty</div>
+    <div class="difficulty-row">
+      <button class="diff-btn ${currentDifficulty==='easy'?'active':''}" data-d="easy" onclick="setDifficulty('${key}','easy')">🟢 Easy</button>
+      <button class="diff-btn ${currentDifficulty==='medium'?'active':''}" data-d="medium" onclick="setDifficulty('${key}','medium')">🟡 Medium</button>
+      <button class="diff-btn ${currentDifficulty==='hard'?'active':''}" data-d="hard" onclick="setDifficulty('${key}','hard')">🔴 Hard</button>
+    </div>
+    <div class="hints-area" id="hints-area">
+      ${renderHintsArea(p)}
+    </div>
+  `;
+}
+
+function renderHintsArea(p) {
+  if (currentDifficulty === 'hard') {
+    return `<div class="hard-msg"><span>🔥</span>No hints , you've got this! Push through, Google is allowed, ChatGPT is not 😄</div>`;
+  }
+  if (currentDifficulty === 'medium') {
+    const shown = hintsRevealed > 0 ? `<div class="hint-box">${p.yourTurn.hints[0]}</div>` : '';
+    const btn = hintsRevealed === 0 ? `<button class="btn-reveal-hint" onclick="revealHint('${currentProjectKey}')">💡 Reveal hint</button>` : `<div class="no-hints-label">That's your one hint for medium mode!</div>`;
+    return shown + btn;
+  }
+  // easy , step by step
+  let out = '';
+  for (let i = 0; i < hintsRevealed; i++) {
+    out += `<div class="hint-box">${p.yourTurn.hints[i]}</div>`;
+  }
+  if (hintsRevealed < p.yourTurn.hints.length) {
+    out += `<button class="btn-reveal-hint" onclick="revealHint('${currentProjectKey}')">💡 Unlock step ${hintsRevealed + 1} of ${p.yourTurn.hints.length}</button>`;
+  } else {
+    out += `<div class="no-hints-label">✅ All steps revealed , now go build it!</div>`;
+  }
+  return out;
+}
+
+function setDifficulty(key, d) {
+  currentDifficulty = d;
+  hintsRevealed = 0;
+  // update problem statement
+  const p = PROJECTS[key];
+  const problemText = p.yourTurn[d]?.problem || p.yourTurn.easy.problem;
+  const problemEl = document.querySelector('.yt-problem');
+  if (problemEl) problemEl.innerHTML = problemText;
+  // update hints
+  document.getElementById('hints-area').innerHTML = renderHintsArea(p);
+  document.querySelectorAll('.diff-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.d === d);
   });
 }
 
-function switchTab(tab) {
-  const skillsView = document.getElementById('skills-view');
-  const roadmapView = document.getElementById('roadmap');
-  const workflowView = document.getElementById('workflow-view');
-  const btnSkills = document.getElementById('tab-skills');
-  const btnRoadmap = document.getElementById('tab-roadmap');
-  const btnWorkflow = document.getElementById('tab-workflow');
+function revealHint(key) {
+  const p = PROJECTS[key];
+  if (currentDifficulty === 'medium') { hintsRevealed = 1; }
+  else if (hintsRevealed < p.yourTurn.hints.length) { hintsRevealed++; }
+  document.getElementById('hints-area').innerHTML = renderHintsArea(p);
+}
 
-  // hide all
+function copyCode(btn) {
+  const pre = btn.closest('.code-wrap').querySelector('pre');
+  navigator.clipboard.writeText(pre.innerText).then(() => {
+    btn.textContent = '✅ Copied!';
+    setTimeout(() => btn.textContent = '📋 Copy', 1800);
+  });
+}
+
+function closeProjOverlay(e) {
+  if (!e || e.target === document.getElementById('proj-overlay')) {
+    document.getElementById('proj-overlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+}
+
+// ── Roadmap data ──────────────────────────────────────────────────────────────
+
+function switchTab(tab) {
+  const skillsView   = document.getElementById('skills-view');
+  const workflowView = document.getElementById('workflow-view');
+  const btnSkills    = document.getElementById('tab-skills');
+  const btnWorkflow  = document.getElementById('tab-workflow');
+
+  // Hide both
   skillsView.classList.add('hidden');
-  roadmapView.classList.remove('visible');
-  workflowView.style.display = 'none';
+  workflowView.classList.add('hidden');
   btnSkills.classList.remove('active');
-  btnRoadmap.classList.remove('active');
   btnWorkflow.classList.remove('active');
 
+  // Show selected
   if (tab === 'skills') {
     skillsView.classList.remove('hidden');
     btnSkills.classList.add('active');
-  } else if (tab === 'roadmap') {
-    roadmapView.classList.add('visible');
-    btnRoadmap.classList.add('active');
-    buildRoadmap();
   } else if (tab === 'workflow') {
-    workflowView.style.display = 'block';
+    workflowView.classList.remove('hidden');
     btnWorkflow.classList.add('active');
   }
 }
@@ -1431,6 +1870,16 @@ document.addEventListener('keydown', e=>{
 
 // ── Init ──────────────────────────────────────────────────────────────────────
 render();
+document.getElementById('workflow-view').classList.add('hidden');
 </script>
+
+<!-- Project Modal -->
+<div class="proj-overlay" id="proj-overlay" onclick="closeProjOverlay(event)">
+  <div class="proj-modal" id="proj-modal">
+    <button class="proj-close" onclick="closeProjOverlay()">✕</button>
+    <div id="proj-modal-inner"></div>
+  </div>
+</div>
+
 </body>
 </html>
